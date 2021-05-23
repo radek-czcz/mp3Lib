@@ -45,7 +45,7 @@ public class locsSets implements Runnable {
 		 */
 		public static void setLocsSets() {
 			synchronized (allSets) {
-				TextIO.readFile("g:\\locs.dat");
+				TextIO.readFile("d:\\locs.dat");
 				String line;
 		
 				while ( ! TextIO.eof() ) {

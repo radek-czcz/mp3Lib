@@ -63,7 +63,7 @@ public class sstr {
 	 */
 	static void scanFoldersToDataFile() {
 		File locations;
-		TextIO.readFile("g:\\locs.dat");
+		TextIO.readFile("d:\\locs.dat");
 		String line;
 
 		while ( ! TextIO.eof() ) {
@@ -132,7 +132,7 @@ public class sstr {
 	 * @param inp
 	 */
 	static void writeScannedFileToDataFile(mp3Ident inp) {
-		try (FileOutputStream fos = new FileOutputStream("g:\\arch31_g.dat", true);
+		try (FileOutputStream fos = new FileOutputStream("d:\\arch31_g.dat", true);
 				ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 			oos.writeObject(inp);
 			oos.close();
@@ -193,7 +193,7 @@ public class sstr {
 		/**Iterator<myPathString> it = locsSets.getLocsList().iterator();
 		while (it.hasNext()) {
 		}**/
-		File source = new File("g:\\arch31_g.dat");
+		File source = new File("d:\\arch31_g.dat");
 		FileInputStream fis = null;
 		mp3Ident buff;
 
