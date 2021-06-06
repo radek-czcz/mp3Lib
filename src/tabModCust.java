@@ -1,5 +1,6 @@
 
 import java.awt.BorderLayout;
+import java.awt.Choice;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.ContainerEvent;
@@ -23,6 +24,8 @@ import java.util.Arrays;
 import java.util.Vector;
 import java.util.stream.Stream;
 
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -30,6 +33,7 @@ import javax.swing.JTable;
 import javax.swing.JViewport;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 /**
@@ -49,6 +53,11 @@ public class tabModCust {
 		locsWindowFrame = new JFrame();
 		locsTable = new JTable(new extAbstrTab());
 		setDisplayWindow();
+		TableColumn tc = locsTable.getColumnModel().getColumn(1);
+		JComboBox<String> comboBox = new JComboBox<String>();
+		comboBox.addItem("archive");
+		comboBox.addItem("actual");
+		tc.setCellEditor(new DefaultCellEditor(comboBox));
 	}
 
 	/**sets directories Window.
@@ -88,14 +97,16 @@ public class tabModCust {
 			public void windowClosing(WindowEvent e) {
 				// TODO Auto-generated method stub
 				Stream<String> str;
-				File dirDataFile = new File("g:\\locs.dat");
+				File dirDataFile = new File("d:\\locs.dat");
 				FileWriter fW;
 				try {
 					fW = new FileWriter(dirDataFile);
 					BufferedWriter bW = new BufferedWriter(fW);
 					for (int nth = 0; nth < locsTable.getModel().getRowCount(); ++nth) {
+						if (locsTable.getModel().getValueAt(nth, 0) != "enter path") {
 						bW.write((String) locsTable.getModel().getValueAt(nth, 0));
 						bW.newLine();
+						}
 					}
 					bW.close();
 					fW.close();
@@ -155,7 +166,7 @@ public class tabModCust {
 					myTab.tableDat = Arrays.copyOf(myTab.tableDat, myTab.tableDat.length - 1);
 				} else {
 					myTab.tableDat = Arrays.copyOf(myTab.tableDat, myTab.tableDat.length + 1);
-					myTab.tableDat[myTab.tableDat.length - 1] = "abc";
+					myTab.tableDat[myTab.tableDat.length - 1][0] = "enter path";
 				}
 				/**locsWindowFrame.remove(0);
 				locsTable = new JTable(myTab);
@@ -179,16 +190,22 @@ static private class extAbstrTab extends AbstractTableModel {
 
 	// two columns titles
 	String[] cols = new String[] 
-			{ "Path", "Date updated" };
+			{ "Path", "Type", "Date updated"};
 	
 	// two directory lines
-	static Object[] tableDat;
+	static Object[][] tableDat;
 
 	/**
 	 * constructor - reads lines from locs file
 	 */
 	extAbstrTab() {
-		tableDat = readLocationsInFile();
+		Object[] tempArray2 = readLocationsInFile();
+		Object[][] tempArray = new Object[tempArray2.length][3];
+		int nth = 0;
+		while (nth < tempArray2.length) {
+			tempArray[nth][0] = tempArray2[nth++];
+		}
+		tableDat = tempArray;
 	}
 
 	/**
@@ -196,7 +213,7 @@ static private class extAbstrTab extends AbstractTableModel {
 	 * @return
 	 */
 	static Object[] readLocationsInFile() {
-		File dirDataFile = new File("g:\\locs.dat");
+		File dirDataFile = new File("d:\\locs.dat");
 		FileReader fR;
 		try {
 			fR = new FileReader(dirDataFile);
@@ -228,14 +245,14 @@ static private class extAbstrTab extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return 2;
+		return cols.length;
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
-			return tableDat[rowIndex];
+			return tableDat[rowIndex][columnIndex];
 		default:
 			return null;
 		}
@@ -244,7 +261,7 @@ static private class extAbstrTab extends AbstractTableModel {
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 
-		if (columnIndex < 1)
+		if (columnIndex < 2)
 			return true;
 		else
 			return false;
@@ -252,7 +269,7 @@ static private class extAbstrTab extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		tableDat[rowIndex] = (String) aValue;
+		tableDat[rowIndex][columnIndex] = (String) aValue;
 	}
 
 	@Override
