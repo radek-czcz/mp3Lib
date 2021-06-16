@@ -97,13 +97,15 @@ public class tabModCust {
 			public void windowClosing(WindowEvent e) {
 				// TODO Auto-generated method stub
 				Stream<String> str;
-				File dirDataFile = new File("d:\\locs.dat");
+				File dirDataFile = new File("g:\\locs.dat");
 				FileWriter fW;
 				try {
 					fW = new FileWriter(dirDataFile);
 					BufferedWriter bW = new BufferedWriter(fW);
 					for (int nth = 0; nth < locsTable.getModel().getRowCount(); ++nth) {
-						if (locsTable.getModel().getValueAt(nth, 0) != "enter path") {
+						File locEntry = new File(locsTable.getModel().getValueAt(nth, 0).toString());
+						if (locsTable.getModel().getValueAt(nth, 0) != "enter path" 
+							&&	locEntry.exists()) {
 						bW.write((String) locsTable.getModel().getValueAt(nth, 0));
 						bW.newLine();
 						}
@@ -127,6 +129,10 @@ public class tabModCust {
 		
 		});
 		locsWindowFrame.getContentPane().getComponent(0).addMouseListener(new MouseListener() {
+			
+			void rightMouseClick(){
+				
+			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -154,7 +160,9 @@ public class tabModCust {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				if (e.getButton() == 2) {
+					rightMouseClick();
+				}
 				if (e.isControlDown()) {}
 				JScrollPane jsp;
 				jsp = (JScrollPane) e.getSource();
@@ -166,6 +174,7 @@ public class tabModCust {
 					myTab.tableDat = Arrays.copyOf(myTab.tableDat, myTab.tableDat.length - 1);
 				} else {
 					myTab.tableDat = Arrays.copyOf(myTab.tableDat, myTab.tableDat.length + 1);
+					myTab.tableDat[myTab.tableDat.length - 1] = new Object[3];
 					myTab.tableDat[myTab.tableDat.length - 1][0] = "enter path";
 				}
 				/**locsWindowFrame.remove(0);
@@ -213,7 +222,7 @@ static private class extAbstrTab extends AbstractTableModel {
 	 * @return
 	 */
 	static Object[] readLocationsInFile() {
-		File dirDataFile = new File("d:\\locs.dat");
+		File dirDataFile = new File("g:\\locs.dat");
 		FileReader fR;
 		try {
 			fR = new FileReader(dirDataFile);
@@ -251,7 +260,7 @@ static private class extAbstrTab extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch (columnIndex) {
-		case 0:
+		case 0: case 1:
 			return tableDat[rowIndex][columnIndex];
 		default:
 			return null;

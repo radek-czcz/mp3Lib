@@ -24,6 +24,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
+import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.ListModel;
 
@@ -63,7 +64,7 @@ public class sstr {
 	 */
 	static void scanFoldersToDataFile() {
 		File locations;
-		TextIO.readFile("d:\\locs.dat");
+		TextIO.readFile("g:\\locs.dat");
 		String line;
 
 		while ( ! TextIO.eof() ) {
@@ -83,7 +84,6 @@ public class sstr {
 	static void scanFolders(File inp) {
 		// declarations
 		mp3Ident song;
-		mp3Ident readNow;
 		// filter
 		FileFilter myFilt = new FileFilter() {
 			public boolean accept(File pathname) {
@@ -132,7 +132,10 @@ public class sstr {
 	 * @param inp
 	 */
 	static void writeScannedFileToDataFile(mp3Ident inp) {
-		try (FileOutputStream fos = new FileOutputStream("d:\\arch31_g.dat", true);
+		// TODO scanning CD to data file, anchor point.
+		JFileChooser jfc = new JFileChooser();
+		jfc.showSaveDialog(null);
+		try (FileOutputStream fos = new FileOutputStream("g:\\arch31_g.dat", true);
 				ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 			oos.writeObject(inp);
 			oos.close();
@@ -193,7 +196,7 @@ public class sstr {
 		/**Iterator<myPathString> it = locsSets.getLocsList().iterator();
 		while (it.hasNext()) {
 		}**/
-		File source = new File("d:\\arch31_g.dat");
+		File source = new File("g:\\arch31_g.dat");
 		FileInputStream fis = null;
 		mp3Ident buff;
 

@@ -223,6 +223,7 @@ public class startCl {
 	
 	// directory choose dialog window
 	static void directoryChange() {
+		// TODO - example for dialog window for file chooser
 		JFileChooser fileChooseWindow = new JFileChooser();
 		fileChooseWindow.setDialogTitle("choose target directory");
 		fileChooseWindow.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -280,6 +281,7 @@ public class startCl {
 
 
 				respModel.getRmodel().changeModel();
+
 
 			}
 		}
