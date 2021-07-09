@@ -35,7 +35,12 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.sun.source.tree.TypeCastTree;
+import entry.FilesPaths;
+import entry.PathProvider;
 
 public class startCl {
 	
@@ -58,6 +63,11 @@ public class startCl {
 	
 	// released
 	public static void main(String args[]) {
+		
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("config.xml");
+		PathProvider fPaths = (PathProvider)applicationContext.getBean("pathsAntek");
+		
+		
 		System.out.println("dek".toLowerCase().matches("(.*)ek(.*)"));
 		Thread winSetup = new Thread(new thrRunner1() {      // starter()
 			@Override
