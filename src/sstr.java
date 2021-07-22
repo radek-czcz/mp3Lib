@@ -133,8 +133,8 @@ public class sstr {
 	 */
 	static void writeScannedFileToDataFile(mp3Ident inp) {
 		// TODO scanning CD to data file, anchor point.
-		JFileChooser jfc = new JFileChooser();
-		jfc.showSaveDialog(null);
+		//JFileChooser jfc = new JFileChooser();
+		//jfc.showSaveDialog(null);
 		try (FileOutputStream fos = new FileOutputStream("g:\\arch31_g.dat", true);
 				ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 			oos.writeObject(inp);

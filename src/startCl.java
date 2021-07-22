@@ -549,22 +549,9 @@ abstract class respModel implements fileListProvider{
 		art, dirs
 	}
 	static viewType vType = viewType.art;
-	static respModel model;// = new respModelArt();
-
-	// private JList<?> jL1 = new JList<String>();; //= new JList<String>(dlmMpsAb);
-	// private JList<?> jL2; // = new JList<>(dlmStr);
+	static respModel model;
 
 	abstract void changeModel() ;
-		/**switch (vType) {
-		case dirs:
-			//model = new respModelArt();
-			vType = viewType.art;
-			break;
-		default:
-			model = new respModelDir();
-			vType = viewType.dirs;
-		}
-	}**/
 
 	static respModel getRmodel() {
 		return model;
@@ -658,17 +645,11 @@ class respModelArt extends respModel {
 					// String lisItVal = lisIt.next();
 					String valItSel;
 
-					// select
-
-					// all values
-					Set<String> keysinartalbmap = mp3Ident.arts.keySet();
-
 					// all values iterator
 					Iterator<String> albNames;
 					Iterator<mp3Ident> itKeysInArtAlbMap;
 					// String val = ksI.next();
-					String valItKeysInArtAlbMap;
-					// dlmStr = new DefaultListModelMpsAb<mp3Ident>();
+
 					while (itListSelected.hasNext()) {
 						valItSel = itListSelected.next();
 						TreeMap<String, ArrayList<mp3Ident>> tryStr = mp3Ident.arts.get(valItSel);
@@ -745,9 +726,6 @@ class respModelArt extends respModel {
 	void changeModel() {
 		respModelDir newrm = new respModelDir();
 		model = newrm;
-		/**dlmMpsAb.removeAllElements();
-		DefaultListModelMpsAb<myPathString> newMod = (DefaultListModelMpsAb<myPathString>)dlmMpsAb;
-		newMod.addAll(locsSets.getLocsList());**/
 	}
 }
 
