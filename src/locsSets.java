@@ -66,7 +66,8 @@ public class locsSets implements Runnable {
 				Iterator<myPathString> overKeys = allSets.keySet().iterator();
 				while (overKeys.hasNext()) {
 				myPathString runner = overKeys.next();
-				if (str.getPath().startsWith(runner.getPath()))
+				if (str.getPath().startsWith(runner.getPath() + "\\") || 
+						str.getPath().equals(runner.getPath()) )
 					return allSets.get(runner);
 				}
 				
