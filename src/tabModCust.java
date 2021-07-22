@@ -170,6 +170,11 @@ public class tabModCust {
 				JTable jtb2 = (JTable) jtb.getView();
 				TableModel jdtbm = jtb2.getModel();
 				extAbstrTab myTab = (extAbstrTab) jdtbm;
+				if (jtb2.getSelectedRow() >= 0) {
+					System.out.println("outer table");
+					jtb2.clearSelection();
+					return;
+				}
 				if (e.isControlDown()) {
 					myTab.tableDat = Arrays.copyOf(myTab.tableDat, myTab.tableDat.length - 1);
 				} else {
