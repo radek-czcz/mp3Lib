@@ -59,13 +59,14 @@ public class startCl {
 			"artist set"
 			};
 	
+	static PathProvider fPaths;
 	// end class variables
 	
 	// released
 	public static void main(String args[]) {
 		
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("config2.xml");
-		PathProvider fPaths = (PathProvider)applicationContext.getBean("paths");
+		fPaths = (PathProvider)applicationContext.getBean("paths");
 		
 		
 		System.out.println("dek".toLowerCase().matches("(.*)ek(.*)"));
@@ -270,7 +271,7 @@ public class startCl {
 				System.out.println("directory changed");
 				break loop;
 			case "4":
-				File toDel = new File("g:\\arch31_g.dat");
+				File toDel = new File(fPaths.getPathDriveLetter() + ":\\arch31_g.dat");
 				toDel.delete();
 				break loop;
 			case "6":

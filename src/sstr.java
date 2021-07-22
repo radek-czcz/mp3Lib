@@ -64,7 +64,7 @@ public class sstr {
 	 */
 	static void scanFoldersToDataFile() {
 		File locations;
-		TextIO.readFile("g:\\locs.dat");
+		TextIO.readFile(startCl.fPaths.getPathDriveLetter() + ":\\locs.dat");
 		String line;
 
 		while ( ! TextIO.eof() ) {
@@ -135,7 +135,7 @@ public class sstr {
 		// TODO scanning CD to data file, anchor point.
 		//JFileChooser jfc = new JFileChooser();
 		//jfc.showSaveDialog(null);
-		try (FileOutputStream fos = new FileOutputStream("g:\\arch31_g.dat", true);
+		try (FileOutputStream fos = new FileOutputStream(startCl.fPaths.getPathDriveLetter() + ":\\arch31_g.dat", true);
 				ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 			oos.writeObject(inp);
 			oos.close();
@@ -196,7 +196,7 @@ public class sstr {
 		/**Iterator<myPathString> it = locsSets.getLocsList().iterator();
 		while (it.hasNext()) {
 		}**/
-		File source = new File("g:\\arch31_g.dat");
+		File source = new File(startCl.fPaths.getPathDriveLetter() + ":\\arch31_g.dat");
 		FileInputStream fis = null;
 		mp3Ident buff;
 
@@ -245,7 +245,7 @@ public class sstr {
 			javax.swing.JOptionPane.showMessageDialog(null, "file not found");
 			e.printStackTrace();
 		}
-		TextIO.writeFile("g:\\new.txt");
+		TextIO.writeFile(startCl.fPaths.getPathDriveLetter() + ":\\new.txt");
 		while (true) {
 			try {
 				mp3 = readMp3idFromDataFile(source, fis);
