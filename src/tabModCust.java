@@ -97,7 +97,7 @@ public class tabModCust {
 			public void windowClosing(WindowEvent e) {
 				// TODO Auto-generated method stub
 				Stream<String> str;
-				File dirDataFile = new File("g:\\locs.dat");
+				File dirDataFile = new File(startCl.fPaths.getPathDriveLetter() + ":\\locs.dat");
 				FileWriter fW;
 				try {
 					fW = new FileWriter(dirDataFile);
@@ -227,7 +227,7 @@ static private class extAbstrTab extends AbstractTableModel {
 	 * @return
 	 */
 	static Object[] readLocationsInFile() {
-		File dirDataFile = new File("g:\\locs.dat");
+		File dirDataFile = new File(startCl.fPaths.getPathDriveLetter() + ":\\locs.dat");
 		FileReader fR;
 		try {
 			fR = new FileReader(dirDataFile);
