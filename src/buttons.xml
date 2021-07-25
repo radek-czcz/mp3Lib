@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		id="buttonsBean" class="entry.ButtonNameProvider">
+		<property
+			name = "ButtonsNames">
+			<array value-type="java.lang.String">
+	            <value>read dir</value>
+	            <value>read data file</value>
+	            <value>exit</value>
+	            <value>directory</value>
+	            <value>reset file</value>
+	            <value>hidden1</value>
+	            <value>move 4</value>
+	            <value>locs</value>
+	            <value>view</value>
+	            <value>artist set</value>
+        	</array>
+		</property>
+	</bean>
+	
+
+
+</beans>

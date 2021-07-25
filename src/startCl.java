@@ -40,6 +40,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.sun.source.tree.TypeCastTree;
 import entry.FilesPaths;
+import entry.IButtonNameProvider;
 import entry.PathProvider;
 
 public class startCl {
@@ -60,6 +61,7 @@ public class startCl {
 			};
 	
 	static PathProvider fPaths;
+	static IButtonNameProvider buttonsNames; 
 	// end class variables
 	
 	// released
@@ -67,6 +69,7 @@ public class startCl {
 		
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("config2.xml");
 		fPaths = (PathProvider)applicationContext.getBean("paths");
+		buttonsNames = (IButtonNameProvider)applicationContext.getBean("buttonsBean");
 		
 		
 		System.out.println("dek".toLowerCase().matches("(.*)ek(.*)"));

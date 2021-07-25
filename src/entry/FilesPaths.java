@@ -4,6 +4,15 @@ public class FilesPaths implements PathProvider {
 	
 	String pathDriveLetter;
 	String path;
+	String[] buttons;
+
+	public String[] getButtons() {
+		return buttons;
+	}
+
+	public void setButtons(String[] buttons) {
+		this.buttons = buttons;
+	}
 
 	public void setPathDriveLetter(String pathDriveLetter) {
 		this.pathDriveLetter = pathDriveLetter;
