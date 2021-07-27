@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -790,6 +791,9 @@ class respModelDir extends respModel {
 					// iterator over all myPathStrings
 					Iterator<myPathString> valAllMyPathStrings = allMyPathStrings.iterator();
 
+					ArrayList<String> sortedList = new ArrayList<>();
+					{
+						DefaultListModel<String> methVar = (DefaultListModel<String>) dlmStr;
 					while (itListSelected.hasNext()) {
 						
 						// new code
@@ -797,8 +801,8 @@ class respModelDir extends respModel {
 						locsSets tryStr = locsSets.getSetUnit(valItListSelected.getPath());
 						//HashSet<mp3Ident> arrL = new HashSet<>();
 						//arrL.addAll(tryStr.getSongs());
-						DefaultListModel<String> methVar = (DefaultListModel<String>) dlmStr;
-						methVar.addAll(tryStr.getHMapAlbums().keySet());
+						
+						sortedList.addAll(tryStr.getHMapAlbums().keySet());
 						//
 						
 						//old code
@@ -809,6 +813,25 @@ class respModelDir extends respModel {
 							DefaultListModel<mp3Ident> methVar = (DefaultListModel<mp3Ident>) dlmStr;
 							methVar.addAll(arrL);**/
 						//
+					}
+					sortedList.sort(new Comparator<String>() {
+
+						@Override
+						public int compare(String o1, String o2) {
+							// TODO Auto-generated method stub
+							return o1.compareToIgnoreCase(o2);
+							
+							/*if (o2.compareToIgnoreCase(o1) > Long.valueOf(o2)) {
+							return 1;
+							}
+							if (Long.valueOf(o1) < Long.valueOf(o2)) {
+							return -1;
+							}
+							else 
+								return 0;*/
+						}
+					});
+					methVar.addAll(sortedList);
 					}
 				}
 				DefaultListModelMpsAb<String> jld = (DefaultListModelMpsAb<String>)dlmStr;
