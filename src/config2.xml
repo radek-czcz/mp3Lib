@@ -6,6 +6,7 @@
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
 <import resource="config3.xml"/>
+<import resource="buttons.xml"/>
 
 </beans>
 

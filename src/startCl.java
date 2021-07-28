@@ -51,16 +51,6 @@ public class startCl {
 	static File targetDir;
 	static ArrayList<mp3Ident> toDeleteFromDataFile;
 	
-	// button menu items list (String)
-	static final String[] menuM
-			= { 
-			"read dir", "read data file", 
-			"exit", "directory", 
-			"reset file", "hidden1",
-			"move 4", "locs", "view",
-			"artist set"
-			};
-	
 	static PathProvider fPaths;
 	static IButtonNameProvider buttonsNames; 
 	// end class variables
@@ -375,12 +365,12 @@ public class startCl {
 		// end propert.
 
 		// add menu buttons
-		for (int nth = 0; nth < menuM.length; nth++) {
-			JButton jB = new JButton(menuM[nth]);
+		for (int nth = 0; nth < buttonsNames.provideButtons().length; nth++) {
+			JButton jB = new JButton(buttonsNames.provideButtons()[nth]);
 			String name = String.valueOf(nth);
 			jB.setName(name);
 			contentButtonsInner1.add(jB);
-			if (menuM[nth].matches("hidden.*"))
+			if (buttonsNames.provideButtons()[nth].matches("hidden.*"))
 				jB.setVisible(false);
 		}
 		// end

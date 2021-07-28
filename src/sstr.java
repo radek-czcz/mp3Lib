@@ -120,6 +120,9 @@ public class sstr {
 					continue;
 				}
 				
+				// add to locsSets
+				locsSets.getSetUnit(song.fileM.getPath()).addMp3(song);
+				// write to data file
 				writeScannedFileToDataFile(song);
 			}
 		}
@@ -139,10 +142,6 @@ public class sstr {
 				ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 			oos.writeObject(inp);
 			oos.close();
-			
-			// add to locsSets
-			locsSets.getSetUnit(inp.fileM.getPath()).addMp3(inp);
-			// end add to locsSets 
 			
 		} catch (IOException e) {
 			e.printStackTrace();
