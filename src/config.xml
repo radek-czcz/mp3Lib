@@ -10,6 +10,9 @@
 		<property
 			name = "pathDriveLetter" value="d">
 		</property>
+		<property
+			name = "path" value="">
+		</property>
 	</bean>
 	
 

@@ -62,6 +62,7 @@ public class startCl {
 		fPaths = (PathProvider)applicationContext.getBean("paths");
 		buttonsNames = (IButtonNameProvider)applicationContext.getBean("buttonsBean");
 		
+		setPaths();
 		
 		System.out.println("dek".toLowerCase().matches("(.*)ek(.*)"));
 		Thread winSetup = new Thread(new thrRunner1() {      // starter()
@@ -181,6 +182,27 @@ public class startCl {
 		
 		// window setup
 		
+	}
+
+	static void setPaths() {
+		String filePath = new String(startCl.fPaths.getPath() + "archive.dat");
+		File newFile = new File(filePath);
+		
+		try {
+		
+		if (!newFile.getParentFile().exists()) {
+			newFile.getParentFile().mkdir();
+			}
+		} catch (NullPointerException npe) {
+			npe.printStackTrace();
+		}
+			
+		try {
+			newFile.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	synchronized static void readFile() {
@@ -795,16 +817,7 @@ class respModelDir extends respModel {
 						//arrL.addAll(tryStr.getSongs());
 						
 						sortedList.addAll(tryStr.getHMapAlbums().keySet());
-						//
 						
-						//old code
-							/**
-							valItListSelected = itListSelected.next();
-							locsSets tryStr = locsSets.getSetUnit(valItListSelected.getPath());
-							ArrayList<mp3Ident> arrL = tryStr.getSongs();
-							DefaultListModel<mp3Ident> methVar = (DefaultListModel<mp3Ident>) dlmStr;
-							methVar.addAll(arrL);**/
-						//
 					}
 					sortedList.sort(new Comparator<String>() {
 
