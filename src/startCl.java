@@ -286,8 +286,10 @@ public class startCl {
 
 
 				respModel.getRmodel().changeModel();
-
-
+				break loop;
+			case "10":
+				locsSets.getSetUnit(respModel.jl1
+						.getSelectedValuesList().get(0).toString()).transferToArchive();
 			}
 		}
 	}

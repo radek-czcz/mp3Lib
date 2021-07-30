@@ -1,3 +1,6 @@
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -5,7 +8,7 @@ import java.util.Iterator;
 
 import textio.TextIO;
 
-public class locsSets implements Runnable {
+public class locsSets implements Runnable, LocsSetsTransferer {
 		
 		// static vars.
 		private static HashMap<myPathString, locsSets> allSets = new HashMap<>();
@@ -133,5 +136,38 @@ public class locsSets implements Runnable {
 		
 		HashMap<String, HashSet<mp3Ident>> getHMapAlbums(){
 			return hMapAlbums;
+		}
+
+
+		/**
+		 * moves locsSets ArrayList of mp3Ident to archive file
+		 */
+		@Override
+		public void transferToArchive() {
+			try (FileOutputStream fos = new FileOutputStream(startCl.fPaths.getPath() + "archive.dat", true);
+					ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+				while (!getSongs().isEmpty()) {
+					mp3Ident thisMp3 = getSongs().get(0);
+					//System.out.println(getSongs().size());
+					//ystem.out.println(thisMp3.fileM.getPath());
+					oos.writeObject(thisMp3);
+					getSongs().remove(thisMp3);
+					//System.out.println(getSongs().size());
+					/*if (getSongs().size() == 1) {
+						System.out.println("loop ended");
+					}*/
+					//System.out.println(getSongs().size());
+				}  
+				//System.out.println("------empty");
+				oos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public void transferToCurrent() {
+			// TODO Auto-generated method stub
+			
 		}
 }
