@@ -48,7 +48,7 @@ public class locsSets implements Runnable, LocsSetsTransferer {
 		 */
 		public static void setLocsSets() {
 			synchronized (allSets) {
-				TextIO.readFile("g:\\locs.dat");
+				TextIO.readFile(startCl.fPaths.getPathDriveLetter() + ":\\locs.dat");
 				String line;
 		
 				while ( ! TextIO.eof() ) {
