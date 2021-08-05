@@ -11,8 +11,12 @@ import textio.TextIO;
 public class locsSets implements Runnable, LocsSetsTransferer {
 		
 		// static vars.
-		private static HashMap<myPathString, locsSets> allSets = new HashMap<>();
+		private static LocsSetsHashMap<myPathString, locsSets> allSets = new LocsSetsHashMap<>();
 		
+		public static LocsSetsHashMap<myPathString, locsSets> getAllSets() {
+			return allSets;
+		}
+
 		// instance vars.
 		private myPathString locPath;
 		private HashMap<String, HashSet<mp3Ident>> hMapAlbums = new HashMap<>();

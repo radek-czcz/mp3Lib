@@ -276,15 +276,6 @@ public class startCl {
 				new tabModCust();
 				break loop;
 			case "8":
-
-				/**respModel.removeAllElem();
-
-				DefaultListModelMpsAb<myPathString> myVar = (DefaultListModel MpsAb<myPathString>)respModel.dlmMpsAb;
-
-
-				myVar.addAll(locsSets.getLocsList());**/
-
-
 				respModel.getRmodel().changeModel();
 				break loop;
 			case "10":
@@ -530,11 +521,11 @@ class DefaultListModelMpsAb<E> extends DefaultListModel<E>{
 		// TODO Auto-generated method stub
 		return super.toString();
 	}
-	
 }
 
 
-abstract class respModel implements fileListProvider{
+abstract class respModel implements fileListProvider, Mp3IdentListListener
+	, ILocsSetsListener{
 	
 	private static ArrayList<mp3Ident> fileList;
 	static JList<?> jl1 = new JList<String>();;
@@ -578,6 +569,8 @@ abstract class respModel implements fileListProvider{
 
 	static void createFirst(){
 		model = new respModelArt();
+		mp3Ident.arts.registerListener(model);
+		locsSets.getAllSets().registerListener(model);
 	}
 	
 	void first() {
@@ -724,6 +717,21 @@ class respModelArt extends respModel {
 		respModelDir newrm = new respModelDir();
 		model = newrm;
 	}
+
+	@Override
+	public void mp3IdentListChanged() {
+		// TODO Auto-generated method stub
+		Set<String> toAdd = mp3Ident.arts.keySet();
+		DefaultListModelMpsAb<String> methVar = (DefaultListModelMpsAb<String>) dlmMpsAb;
+		methVar.removeAllElements();
+		methVar.addAll(toAdd);
+	}
+
+	@Override
+	public void locsSetsChanged() {
+		// TODO Auto-generated method stub
+		mp3IdentListChanged();
+	}
 }
 
 class respModelDir extends respModel {	
@@ -863,6 +871,21 @@ class respModelDir extends respModel {
 		
 		respModelArt newrm = new respModelArt();
 		model = newrm;
+		
+	}
+
+	@Override
+	public void mp3IdentListChanged() {
+		// TODO Auto-generated method stub
+		DefaultListModelMpsAb<myPathString> myMod = (DefaultListModelMpsAb<myPathString>)dlmMpsAb;
+		myMod.removeAllElements();
+		myMod.addAll(locsSets.getLocsList());
+	}
+
+	@Override
+	public void locsSetsChanged() {
+		// TODO Auto-generated method stub
+		mp3IdentListChanged();
 		
 	}
 }

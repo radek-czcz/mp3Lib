@@ -304,7 +304,7 @@ class mp3Ident implements Serializable {
 		String tagCom;
 		int tagLen;
 
-		public static TreeMap<String, TreeMap<String, ArrayList<mp3Ident>>> arts = new TreeMap<>();
+		public static AllMp3IdentTreeMap<String, TreeMap<String, ArrayList<mp3Ident>>> arts = new AllMp3IdentTreeMap<>();
 
 		/**
 		 * Constructor for mp3Ident - reads tags from input mp3 file with jaudiotagger,
