@@ -148,7 +148,13 @@ public class locsSets implements Runnable, LocsSetsTransferer {
 		 */
 		@Override
 		public void transferToArchive() {
-			try (FileOutputStream fos = new FileOutputStream(startCl.fPaths.getPath() + "archive.dat", true);
+			String checkedPath = startCl.fPaths.getPath();
+			if (checkedPath == null) {
+				checkedPath = "archive.dat";
+			} else {
+				checkedPath = startCl.fPaths.getPath() + "archive.dat";
+			}
+			try (FileOutputStream fos = new FileOutputStream(checkedPath, true);
 					ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 				while (!getSongs().isEmpty()) {
 					mp3Ident thisMp3 = getSongs().get(0);
