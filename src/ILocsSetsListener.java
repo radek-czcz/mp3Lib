@@ -1,4 +1,4 @@
 
 public interface ILocsSetsListener {
-	void locsSetsChanged();
+	void locsSetsChanged(Object key);
 }
