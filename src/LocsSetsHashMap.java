@@ -13,9 +13,15 @@ public class LocsSetsHashMap<K, V> extends HashMap<K, V> {
 	public V remove(Object key) {
 		// TODO Auto-generated method stub
 		V temp;
+		for (ILocsSetsListener locsSetsListener : listenersList) {
+			if (locsSetsListener instanceof respModel) {}
+			else locsSetsListener.locsSetsChanged(key);
+		}
 		temp = super.remove(key);
 		for (ILocsSetsListener locsSetsListener : listenersList) {
-			locsSetsListener.locsSetsChanged();;
+			if (locsSetsListener instanceof respModel) {
+			locsSetsListener.locsSetsChanged(key);
+			} else {}
 		}
 		return temp;
 	}
