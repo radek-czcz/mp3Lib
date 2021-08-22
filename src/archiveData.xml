@@ -14,5 +14,20 @@
 		<constructor-arg value="10"/>
 		<constructor-arg value="10"/>
 	</bean>
+		<bean id="JLabelBean1" class="javax.swing.JLabel">
+		<constructor-arg value="name:"/>
+		<constructor-arg value="2"/>
+	</bean>
+		<bean id="JLabelBean2" class="javax.swing.JLabel">
+		<constructor-arg value="drive:"/>
+		<constructor-arg value="2"/>
+	</bean>
+	
 
+	<bean id="WindowListenerBean" class="WindowListenerAdapter">
+	</bean>
+	
+	<bean id="MouseListenerBean" class="MouseListenerAdapter">
+	</bean>
+	
 </beans>

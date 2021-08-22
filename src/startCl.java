@@ -241,7 +241,7 @@ public class startCl {
 	}
 
 
-	// class ActionListener override - performs button actions, excepting button "move 4". -> Implements event.ActionListener.actionPerformed
+	// class ActionListener override - performs button actions, except button "move 4". -> Implements event.ActionListener.actionPerformed
 	private static class butListener implements ActionListener {
 		// ActionListener.ActionPerformed override.
 		@Override
@@ -279,6 +279,7 @@ public class startCl {
 				respModel.getRmodel().changeModel();
 				break loop;
 			case "10":
+				//locsSets.getAllSets().remove(locsSets.getLocsList().get(3));
 				locsSets.getSetUnit(respModel.jl1
 						.getSelectedValuesList().get(0).toString()).transferToArchive();
 			}
@@ -524,8 +525,8 @@ class DefaultListModelMpsAb<E> extends DefaultListModel<E>{
 }
 
 
-abstract class respModel implements fileListProvider, Mp3IdentListListener
-	, ILocsSetsListener{
+abstract class respModel implements Mp3IdentListListener,
+	ILocsSetsListener{
 	
 	private static ArrayList<mp3Ident> fileList;
 	static JList<?> jl1 = new JList<String>();;
@@ -579,10 +580,6 @@ abstract class respModel implements fileListProvider, Mp3IdentListListener
 
 	abstract void scnd();
 	
-	@Override
-	public ArrayList<mp3Ident> serveList() {
-		return fileList;
-	}
 }
 
 class respModelArt extends respModel {
@@ -728,9 +725,10 @@ class respModelArt extends respModel {
 	}
 
 	@Override
-	public void locsSetsChanged() {
+	public void locsSetsChanged(Object key) {
 		// TODO Auto-generated method stub
-		mp3IdentListChanged();
+		respModelDir newrm = new respModelDir();
+		model = newrm;
 	}
 }
 
@@ -883,10 +881,10 @@ class respModelDir extends respModel {
 	}
 
 	@Override
-	public void locsSetsChanged() {
+	public void locsSetsChanged(Object key) {
 		// TODO Auto-generated method stub
-		mp3IdentListChanged();
-		
+		respModelArt newrm = new respModelArt();
+		model = newrm;
 	}
 }
 

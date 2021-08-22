@@ -540,7 +540,3 @@ class myPathString implements Comparable {
 		}
 
 }
-
-class sameAudioFinder{
-	
-}
