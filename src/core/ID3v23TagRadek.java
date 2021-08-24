@@ -1,3 +1,4 @@
+package core;
 import org.jaudiotagger.tag.KeyNotFoundException;
 import org.jaudiotagger.tag.id3.ID3v23FieldKey;
 import org.jaudiotagger.tag.id3.ID3v23Tag;

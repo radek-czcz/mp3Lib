@@ -1,3 +1,4 @@
+package core;
 
 public interface mp3Comparable {
 	static public enum equalityCategory {sameOnCD, sameOnBase, sameOnMyComp}

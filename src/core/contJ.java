@@ -1,3 +1,4 @@
+package core;
 import java.awt.Dimension;
 
 	public class contJ extends absContJ{
