@@ -48,6 +48,7 @@ import org.jaudiotagger.tag.mp4.Mp4FieldKey;
 import org.jaudiotagger.tag.reference.GenreTypes;
 import org.jaudiotagger.tag.reference.ID3V2Version;
 
+import arch.ArchiveData;
 import textio.TextIO;
 
 /**
