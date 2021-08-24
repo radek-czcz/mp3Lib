@@ -82,7 +82,7 @@ public class sstr {
 	 * 
 	 * @param inp
 	 */
-	static void scanFolders(File inp) {
+	static void scanFolders(File inp, ArchiveData archiveInp) {
 		// declarations
 		mp3Ident song;
 		// filter
@@ -111,7 +111,7 @@ public class sstr {
 				if (wrk.listFiles().length == 0) {
 					wrk.delete();
 				} else
-					scanFolders(wrk);
+					scanFolders(wrk, archiveInp);
 			} else {
 				try {
 					song = new mp3Ident(wrk);
@@ -119,6 +119,11 @@ public class sstr {
 						| TagException | IOException
 						| CannotReadException e) {
 					continue;
+				}
+				
+				if (archiveInp != null) {
+					static ArrayList<mp3Ident> toAdd; 
+					archiveInp.addToSetOfArchives();
 				}
 				
 				// add to locsSets
