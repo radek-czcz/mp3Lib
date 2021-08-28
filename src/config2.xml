@@ -7,6 +7,7 @@
 
 <import resource="config3.xml"/>
 <import resource="buttons.xml"/>
+<import resource="archiveData.xml"/>
 
 </beans>
 

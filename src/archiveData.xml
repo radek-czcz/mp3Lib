@@ -8,7 +8,7 @@
 
 	
 	<bean id="tree" class="java.util.TreeSet"></bean>
-	<bean id="entryWindow" class="javax.swing.JDialog"></bean>
+	<bean id="entryWindow" class="javax.swing.JFrame"></bean>
 	<bean id="layout" class="java.awt.FlowLayout">
 		<constructor-arg value="2"/>
 		<constructor-arg value="10"/>
@@ -24,10 +24,18 @@
 	</bean>
 	
 
-	<bean id="WindowListenerBean" class="WindowListenerAdapter">
+	<bean id="WindowListenerBean" class="arch.WindowListenerAdapter">
 	</bean>
 	
-	<bean id="MouseListenerBean" class="MouseListenerAdapter">
+	<bean id="MouseListenerBean" class="arch.MouseListenerAdapter">
+	</bean>
+	
+	<bean id="ButtonBean" class="javax.swing.JButton">
+		<constructor-arg value="read Data"/>
+	</bean>
+	
+	<bean id="TextFieldBean" class="javax.swing.JTextField">
+		<constructor-arg value="enter name"/>
 	</bean>
 	
 </beans>

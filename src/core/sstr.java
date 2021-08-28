@@ -1,4 +1,5 @@
 package core;
+
 import java.io.BufferedReader;
 
 import java.io.EOFException;
@@ -48,7 +49,6 @@ import org.jaudiotagger.tag.mp4.Mp4FieldKey;
 import org.jaudiotagger.tag.reference.GenreTypes;
 import org.jaudiotagger.tag.reference.ID3V2Version;
 
-import arch.ArchiveData;
 import textio.TextIO;
 
 /**
@@ -83,7 +83,7 @@ public class sstr {
 	 * 
 	 * @param inp
 	 */
-	static void scanFolders(File inp, ArchiveData archiveInp) {
+	static void scanFolders(File inp) {
 		// declarations
 		mp3Ident song;
 		// filter
@@ -112,7 +112,7 @@ public class sstr {
 				if (wrk.listFiles().length == 0) {
 					wrk.delete();
 				} else
-					scanFolders(wrk, archiveInp);
+					scanFolders(wrk);
 			} else {
 				try {
 					song = new mp3Ident(wrk);
@@ -120,11 +120,6 @@ public class sstr {
 						| TagException | IOException
 						| CannotReadException e) {
 					continue;
-				}
-				
-				if (archiveInp != null) {
-					static ArrayList<mp3Ident> toAdd; 
-					archiveInp.addToSetOfArchives();
 				}
 				
 				// add to locsSets

@@ -36,7 +36,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import entry.PathProvider;
-import package1.locsSets;
+
 
 public class ArchiveData {
 	
@@ -46,7 +46,7 @@ public class ArchiveData {
 		return setOfArchives;
 	}
 	
-	public static void addToSetOfArchives() {
+	public void addToSetOfArchives() {
 		File locAndName = LocAndNameWindow.getPath();
 	}
 	
@@ -56,6 +56,7 @@ public class ArchiveData {
 	ArchiveData(String name) {
 		this.name = name;
 		data = new locsSets(this);
+		setOfArchives.add(this);
 	}
 
 static class LocAndNameWindow {

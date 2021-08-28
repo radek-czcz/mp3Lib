@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import arch.ArchiveData;
 import textio.TextIO;
 
 public class locsSets implements Runnable, LocsSetsTransferer {
@@ -31,6 +32,15 @@ public class locsSets implements Runnable, LocsSetsTransferer {
 			locPath = new myPathString(path);
 			setUnit = new ArrayList<>();
 			allSets.put(locPath, this);
+		}
+		
+		/**
+		 * constructor for ArchiveData
+		 * @param name - Name of the archive
+		 * @param arch - ArchiveData, to be added to
+		 */
+		public locsSets (ArchiveData arch) {
+		
 		}
 		
 		/**
