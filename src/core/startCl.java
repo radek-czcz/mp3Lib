@@ -772,46 +772,31 @@ class respModelDir extends respModel {
 					list = (JList<?>) e.getSource();
 
 					// all selected myPathStrings
-					ArrayList<myPathString> listSelected;
+					ArrayList<MyPathString> listSelected;
 					try {
-						listSelected = (ArrayList<myPathString>) list.getSelectedValuesList();
+						listSelected = (ArrayList<MyPathString>) list.getSelectedValuesList();
 					} catch (ClassCastException cce) {
 						return;
 					}
 
 					// iterator over selected myPathStrings
-					Iterator<myPathString> itListSelected = listSelected.iterator();
-					myPathString valItListSelected;
+					Iterator<MyPathString> itListSelected = listSelected.iterator();
+					MyPathString valItListSelected;
 
 					// all values of myPathString
-					Set<myPathString> allMyPathStrings = new TreeSet<>();
+					Set<MyPathString> allMyPathStrings = new TreeSet<>();
 					allMyPathStrings.addAll(locsSets.getLocsList());
 
 					// iterator over all myPathStrings
-					Iterator<myPathString> valAllMyPathStrings = allMyPathStrings.iterator();
+					Iterator<MyPathString> valAllMyPathStrings = allMyPathStrings.iterator();
 
 					ArrayList<String> sortedList = new ArrayList<>();
 					{
 						DefaultListModel<String> methVar = (DefaultListModel<String>) dlmStr;
 					while (itListSelected.hasNext()) {
-						
-						// new code
 						valItListSelected = itListSelected.next();
 						locsSets tryStr = locsSets.getSetUnit(valItListSelected.getPath());
-						//HashSet<mp3Ident> arrL = new HashSet<>();
-						//arrL.addAll(tryStr.getSongs());
-						
 						sortedList.addAll(tryStr.getHMapAlbums().keySet());
-						//
-						
-						//old code
-							/**
-							valItListSelected = itListSelected.next();
-							locsSets tryStr = locsSets.getSetUnit(valItListSelected.getPath());
-							ArrayList<mp3Ident> arrL = tryStr.getSongs();
-							DefaultListModel<mp3Ident> methVar = (DefaultListModel<mp3Ident>) dlmStr;
-							methVar.addAll(arrL);**/
-						//
 					}
 					sortedList.sort(new Comparator<String>() {
 
@@ -833,7 +818,13 @@ class respModelDir extends respModel {
 					methVar.addAll(sortedList);
 					}
 				}
+				JList<MyPathString> list;
+				list = (JList<MyPathString>) e.getSource();
+				MyPathString selected = list.getSelectedValue();
+				dlmStr = new DefaultListModelMpsAb<String>();
 				DefaultListModelMpsAb<String> jld = (DefaultListModelMpsAb<String>)dlmStr;
+				
+				jld.addAll(locsSets.getSetUnit(selected.getPath()).getHMapAlbums().keySet());
 				JList<String> jlStr = (JList<String>)jl2;
 				jlStr.setModel(jld);
 			}
