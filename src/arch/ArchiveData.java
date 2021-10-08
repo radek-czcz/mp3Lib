@@ -15,6 +15,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -35,40 +37,55 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import core.locsSets;
+import core.Scanning;
 import entry.PathProvider;
 
 
-public class ArchiveData {
+
+public class ArchiveData implements Comparable<ArchiveData>, TransferedObject, Serializable{
 	
-	static private SortedSet<ArchiveData> setOfArchives;
+	static private SortedSet<ArchiveData> setOfArchives = new TreeSet<ArchiveData>();
 
 	public static SortedSet<ArchiveData> getSetOfArchives() {
 		return setOfArchives;
 	}
 	
-	public void addToSetOfArchives() {
-		File locAndName = LocAndNameWindow.getPath();
+	private String name;
+	private locsSets data;
+	
+	static void readListOfArchiveData() {
+		File archiveDir = new File("archivefiles");
+		for (File runner: archiveDir.listFiles()){
+			ArchiveData newAd = new ArchiveData();
+			newAd.name = runner.getName();
+			setOfArchives.add(newAd);
+		}
 	}
-	
-	String name;
-	locsSets data;
-	
-	ArchiveData(String name) {
-		this.name = name;
-		data = new locsSets(this);
+
+	public void addToSetOfArchives() {
 		setOfArchives.add(this);
 	}
 
-static class LocAndNameWindow {
+	ArchiveData() {
+	}
+
+@Override
+	public int compareTo(ArchiveData o) {
+		// TODO Auto-generated method stub
+		return this.name.compareToIgnoreCase(o.name);
+	}
+
+public static class LocAndNameWindow {
 	
 	private static String name;
 	private static File path;
 	
-	public static void main(String[] args) {
+	public static void main() {
 		first();
 	}
 	
-	static void first() {
+	public static void first() {
 		
 		ApplicationContext aC = new ClassPathXmlApplicationContext("config2.xml");
 		
@@ -147,12 +164,25 @@ static class LocAndNameWindow {
 			public void actionPerformed(ActionEvent e) {
 				
 				// name object
+				
 				JTextComponent stringComp = (JTextComponent)c1;
 				
 				//build archive File
 				ItemSelectable iS = (ItemSelectable)c3;
 				Object[] archive = iS.getSelectedObjects();
-				path = new File(archive[0].toString());
+				ArchiveData newArchive = new ArchiveData();
+				newArchive.name = stringComp.getText();
+				newArchive.data = Scanning.scanFolders(new File((String)iS.getSelectedObjects()[0].toString()));
+				try {
+				newArchive.addToSetOfArchives();
+				ArchiveTransferer aT = new ArchiveTransferer();
+				aT.setTo(newArchive);
+				aT.transferToArchive();
+				} catch (Exception exc) {
+					exc.printStackTrace();
+				} finally {
+					// arch.ArchiveDataInfo adi = new ArchiveDataInfo();
+				}
 				
 				System.out.println( "perform action: name of archive=" 
 				+ stringComp.getText() 
@@ -175,4 +205,38 @@ static class LocAndNameWindow {
 		return path;
 	}
 	}
+
+@Override
+public String getName() {
+	return name;
+}
+
+@Override
+public String getPath() {
+	return data.getLocPath().getPath();
+}
+
+@Override
+public String getDescription() {
+	// TODO Auto-generated method stub
+	return "";
+}
+
+@Override
+public String getOwner() {
+	// TODO Auto-generated method stub
+	return "";
+}
+
+@Override
+public ArrayList<Object> getObjects() {
+	ArrayList<Object> retVal = new ArrayList<>(data.getSongs());
+	return retVal;
+}
+
+@Override
+public String toString() {
+	// TODO Auto-generated method stub
+	return this.getName();
+}
 }

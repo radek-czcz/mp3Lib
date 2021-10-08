@@ -41,6 +41,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.sun.source.tree.TypeCastTree;
+
+import arch.ArchiveData;
+import arch.CompareToArchiveWindow;
 import entry.FilesPaths;
 import entry.IButtonNameProvider;
 import entry.PathProvider;
@@ -50,7 +53,7 @@ public class startCl {
 	// class variables
 	// directory to copy/move
 	static File targetDir;
-	static ArrayList<mp3Ident> toDeleteFromDataFile;
+	static ArrayList<Mp3Ident> toDeleteFromDataFile;
 	
 	static PathProvider fPaths;
 	static IButtonNameProvider buttonsNames; 
@@ -94,7 +97,7 @@ public class startCl {
 					e.printStackTrace();
 				}
 				System.out.println(cur + " wakes");
-				respModel.createFirst();
+				RespModel.createFirst();
 				System.out.println(cur + " finished");
 				winSetup.interrupt();
 				
@@ -148,7 +151,7 @@ public class startCl {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				toDeleteFromDataFile = new ArrayList<mp3Ident>();
+				toDeleteFromDataFile = new ArrayList<Mp3Ident>();
 				File songFile;
 				
 				Thread.currentThread().setName("checking files for existence");
@@ -156,11 +159,11 @@ public class startCl {
 				System.out.println("Executing "+cur);
 				thr1.interrupt();
 				
-				ArrayList<myPathString> listToCheck = locsSets.getLocsList();
-				for (myPathString runner : listToCheck) {
+				ArrayList<MyPathString> listToCheck = locsSets.getLocsList();
+				for (MyPathString runner : listToCheck) {
 					locsSets sets = locsSets.getSetUnit(runner.getPath());
-					ArrayList<mp3Ident> songs = sets.getSongs();
-					for (mp3Ident runnerSong : songs) {
+					ArrayList<Mp3Ident> songs = sets.getSongs();
+					for (Mp3Ident runnerSong : songs) {
 						songFile = runnerSong.fileM;
 						if (!songFile.exists()) {
 							toDeleteFromDataFile.add(runnerSong);
@@ -185,14 +188,14 @@ public class startCl {
 	}
 	
 	synchronized static void readFile() {
-		sstr.readDataFile();
+		Scanning.readDataFile();
 	}
 	
 	static void moveOrCopyFiles(){
 		
 
 		try {
-			for (mp3Ident mp3ID : respModel.model.getFileList()) {
+			for (Mp3Ident mp3ID : RespModel.model.getFileList()) {
 			Files.copy(Paths.get(mp3ID.fileM.getAbsolutePath()),
 					Paths.get(
 							startCl.targetDir.getAbsolutePath() 
@@ -252,10 +255,10 @@ public class startCl {
 			loop: // for (String str : startCl.menuM)
 			switch (op.getName()) {
 			case "0":
-				sstr.scanFoldersToDataFile();
+				Scanning.scanFoldersToDataFile();
 				break loop;
 			case "1":
-				sstr.readDataFile();
+				Scanning.readDataFile();
 				fillArt();
 				break loop;
 			case "2":
@@ -272,17 +275,24 @@ public class startCl {
 			case "6":
 				moveOrCopyFiles();
 				break loop;
-			case "7":
+			case "7": // "locs" button
 				System.out.println("abc");
-				new tabModCust();
+				new TabModCust();
 				break loop;
 			case "8":
-				respModel.getRmodel().changeModel();
+				RespModel.getRmodel().changeModel();
 				break loop;
 			case "10":
 				//locsSets.getAllSets().remove(locsSets.getLocsList().get(3));
-				locsSets.getSetUnit(respModel.jl1
+				locsSets.getSetUnit(RespModel.jl1
 						.getSelectedValuesList().get(0).toString()).transferToArchive();
+				break loop;
+			case "11":
+				ArchiveData.LocAndNameWindow.main();
+				break loop;
+			case "12":
+				new CompareToArchiveWindow(
+						locsSets.getSetUnit(RespModel.jl1.getSelectedValuesList().get(0).toString()));
 			}
 		}
 	}
@@ -300,7 +310,7 @@ public class startCl {
 	static void starter() {
 		
 		// init
-		mainFrameCustomized mainFrame = new mainFrameCustomized(); // MAIN WINDOW
+		MainFrameCustomized mainFrame = new MainFrameCustomized(); // MAIN WINDOW
 		contJ2 contentArtist = new contJ2();
 		contentArtist.setName("contentArtist"); // list
 		contJ2 contentAlbum = new contJ2();
@@ -326,8 +336,8 @@ public class startCl {
 		JViewport jV2 = new JViewport();
 		// end
 		
-		jV.setView(respModel.getRmodel().getJl1());
-		jV2.setView(respModel.getRmodel().getJl2());
+		jV.setView(RespModel.getRmodel().getJl1());
+		jV2.setView(RespModel.getRmodel().getJl2());
 		//respModel.model = new respModelArt();
 		
 		//jl1 = new JList<String>();
@@ -522,361 +532,6 @@ class DefaultListModelMpsAb<E> extends DefaultListModel<E>{
 	public String toString() {
 		// TODO Auto-generated method stub
 		return super.toString();
-	}
-}
-
-
-abstract class respModel implements Mp3IdentListListener,
-	ILocsSetsListener{
-	
-	private static ArrayList<mp3Ident> fileList;
-	static JList<?> jl1 = new JList<String>();;
-	static JList<?> jl2 = new JList<String>();;
-	static DefaultListModelMpsAb<?> dlmMpsAb;
-	static DefaultListModelMpsAb<?> dlmStr;
-	
-	static enum viewType {
-		art, dirs
-	}
-	static viewType vType = viewType.art;
-	static respModel model;
-
-	abstract void changeModel() ;
-
-	static respModel getRmodel() {
-		return model;
-	}
-	
-	ArrayList<mp3Ident> getFileList() throws NullPointerException{
-		if (fileList == null) {
-			throw new NullPointerException("File list empty");
-		}
-		return fileList;
-	}
-	
-	static void setFileList(ArrayList<mp3Ident> inp) {
-		fileList = inp;
-	}
-	
-	respModel() {
-	}
-
-	JList getJl1() {
-		return jl1;
-	}
-
-	JList getJl2() {
-		return jl2;
-	}
-
-	static void createFirst(){
-		model = new respModelArt();
-		mp3Ident.arts.registerListener(model);
-		locsSets.getAllSets().registerListener(model);
-	}
-	
-	void first() {
-		jl1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-	}
-
-	abstract void scnd();
-	
-}
-
-class respModelArt extends respModel {
-
-	respModelArt() {
-		dlmMpsAb = new DefaultListModelMpsAb<String>();
-		DefaultListModelMpsAb<String> methVar = (DefaultListModelMpsAb<String>) dlmMpsAb;
-		//jl1 = new JList<String>();
-		//jl2 = new JList<String>();
-		JList<String> jlRef1 = (JList<String>)jl1;
-		jlRef1.setModel(methVar);
-		Set<String> toAdd = mp3Ident.arts.keySet();
-		methVar.addAll(toAdd);
-		scnd();
-	}
-	
-	@Override
-	void scnd() {
-		first();
-		// selecting listening
-		if (jl1.getListSelectionListeners().length != 0)
-			for (int runner = 0; runner < jl1.getListSelectionListeners().length; ++runner)
-				jl1.removeListSelectionListener(jl1.getListSelectionListeners()[runner]);
-		if (jl2.getListSelectionListeners().length != 0)
-			for (int runner = 0; runner < jl2.getListSelectionListeners().length; ++runner)
-				jl2.removeListSelectionListener(jl2.getListSelectionListeners()[runner]);
-		jl1.addListSelectionListener(new ListSelectionListener() {
-			
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-
-				if (e.getValueIsAdjusting() == false) {
-					dlmStr = new DefaultListModelMpsAb<String>();
-					DefaultListModelMpsAb<String> methDlmStr = (DefaultListModelMpsAb<String>)dlmStr;
-					JList<String> methJl2 = (JList<String>) jl2;
-					ArrayList<mp3Ident> toUse = new ArrayList<>();
-					// dlmStr.clear();
-
-					JList<String> list = (JList<String>) e.getSource();
-
-					List<String> listSelected;
-					try {
-						listSelected = (List<String>) list.getSelectedValuesList();
-					} catch (ClassCastException cce) {
-						return;
-					}
-
-					// selected values iterator
-					Iterator<String> itListSelected = listSelected.iterator();
-					// String lisItVal = lisIt.next();
-					String valItSel;
-
-					// all values iterator
-					Iterator<String> albNames;
-					Iterator<mp3Ident> itKeysInArtAlbMap;
-					// String val = ksI.next();
-
-					while (itListSelected.hasNext()) {
-						valItSel = itListSelected.next();
-						TreeMap<String, ArrayList<mp3Ident>> tryStr = mp3Ident.arts.get(valItSel);
-						
-						//add albums to be viewed in JL2
-						Set<String> newStrArr = tryStr.keySet();
-						methDlmStr.addAll(newStrArr);
-						
-						//add song Files to list to being copied / moved
-						
-						albNames = tryStr.keySet().iterator();
-						while (albNames.hasNext()) {
-							
-							itKeysInArtAlbMap = tryStr.get(albNames.next()).iterator();
-							while (itKeysInArtAlbMap.hasNext())
-								toUse.add(itKeysInArtAlbMap.next());
-						}
-						
-					}
-					methJl2.setModel(methDlmStr);
-					setFileList(toUse);
-					
-				}
-			}
-		
-		});
-		
-		jl2.addListSelectionListener(new ListSelectionListener() {
-			
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				
-				// Strings selected in JLists
-				List<String> nStrArrArt = respModel.getRmodel().getJl1().getSelectedValuesList();
-				List<String> nStrArr = respModel.getRmodel().getJl2().getSelectedValuesList();
-				Iterator<String> selectedAlbumIterator = nStrArr.iterator();
-				// end Strings selected
-
-				// all mp3's to copy
-				ArrayList<mp3Ident> toUse = new ArrayList<>();
-
-				while (selectedAlbumIterator.hasNext()) {
-					String albumVe = selectedAlbumIterator.next();
-
-					Iterator<String> selectedArtistIterator = nStrArrArt.iterator();
-					while (selectedArtistIterator.hasNext()) {
-						String artistVe = selectedArtistIterator.next();
-						TreeMap<String, ArrayList<mp3Ident>> mapAlbumToSongList = mp3Ident.arts.get(artistVe);
-						if (mapAlbumToSongList.containsKey(albumVe)) {
-							toUse.addAll(mapAlbumToSongList.get(albumVe));
-							
-							/**for (mp3Ident mp3ID : mapAlbumToSongList.get(albumVe)) {
-
-								try {
-									Files.copy(Paths.get(mp3ID.fileM.getAbsolutePath()),
-											Paths.get(
-													startCl.targetDir.getAbsolutePath() 
-													+ "\\" + mp3ID.fileM.getName()),
-											StandardCopyOption.REPLACE_EXISTING);
-					 			} catch (IOException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}**/
-							}
-						}
-					}
-				setFileList(toUse);
-				}
-			
-		});
-	}
-	
-	@Override
-	void changeModel() {
-		respModelDir newrm = new respModelDir();
-		model = newrm;
-	}
-
-	@Override
-	public void mp3IdentListChanged() {
-		// TODO Auto-generated method stub
-		Set<String> toAdd = mp3Ident.arts.keySet();
-		DefaultListModelMpsAb<String> methVar = (DefaultListModelMpsAb<String>) dlmMpsAb;
-		methVar.removeAllElements();
-		methVar.addAll(toAdd);
-	}
-
-	@Override
-	public void locsSetsChanged(Object key) {
-		// TODO Auto-generated method stub
-		respModelDir newrm = new respModelDir();
-		model = newrm;
-	}
-}
-
-class respModelDir extends respModel {	
-	
-	respModelDir() {
-		
-		dlmMpsAb = new DefaultListModelMpsAb<myPathString>();
-		DefaultListModelMpsAb<myPathString> myMod = (DefaultListModelMpsAb<myPathString>)dlmMpsAb;
-		JList<myPathString> myList = (JList<myPathString>)jl1;
-		myList.setModel(myMod);
-		myMod.addAll(locsSets.getLocsList());
-
-		scnd();
-		
-	}
-	
-	@Override
-	void scnd() {
-		first();
-		JList<myPathString> jl = (JList<myPathString>) jl1;
-		// selecting listening
-		if (jl1.getListSelectionListeners().length != 0)
-			for (int runner = 0; runner < jl1.getListSelectionListeners().length; ++runner)
-				jl1.removeListSelectionListener(jl1.getListSelectionListeners()[runner]);
-		if (jl2.getListSelectionListeners().length != 0)
-			for (int runner = 0; runner < jl2.getListSelectionListeners().length; ++runner)
-				jl2.removeListSelectionListener(jl2.getListSelectionListeners()[runner]);
-		jl1.addListSelectionListener(new ListSelectionListener() {
-
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				
-
-				if (e.getValueIsAdjusting() == false) {
-					
-					dlmStr = new DefaultListModelMpsAb<mp3Ident>();
-					
-					JList<?> list;
-					list = (JList<?>) e.getSource();
-
-					// all selected myPathStrings
-					ArrayList<MyPathString> listSelected;
-					try {
-						listSelected = (ArrayList<MyPathString>) list.getSelectedValuesList();
-					} catch (ClassCastException cce) {
-						return;
-					}
-
-					// iterator over selected myPathStrings
-					Iterator<MyPathString> itListSelected = listSelected.iterator();
-					MyPathString valItListSelected;
-
-					// all values of myPathString
-					Set<MyPathString> allMyPathStrings = new TreeSet<>();
-					allMyPathStrings.addAll(locsSets.getLocsList());
-
-					// iterator over all myPathStrings
-					Iterator<MyPathString> valAllMyPathStrings = allMyPathStrings.iterator();
-
-					ArrayList<String> sortedList = new ArrayList<>();
-					{
-						DefaultListModel<String> methVar = (DefaultListModel<String>) dlmStr;
-					while (itListSelected.hasNext()) {
-						valItListSelected = itListSelected.next();
-						locsSets tryStr = locsSets.getSetUnit(valItListSelected.getPath());
-						sortedList.addAll(tryStr.getHMapAlbums().keySet());
-					}
-					sortedList.sort(new Comparator<String>() {
-
-						@Override
-						public int compare(String o1, String o2) {
-							// TODO Auto-generated method stub
-							return o1.compareToIgnoreCase(o2);
-							
-							/*if (o2.compareToIgnoreCase(o1) > Long.valueOf(o2)) {
-							return 1;
-							}
-							if (Long.valueOf(o1) < Long.valueOf(o2)) {
-							return -1;
-							}
-							else 
-								return 0;*/
-						}
-					});
-					methVar.addAll(sortedList);
-					}
-				}
-				JList<MyPathString> list;
-				list = (JList<MyPathString>) e.getSource();
-				MyPathString selected = list.getSelectedValue();
-				dlmStr = new DefaultListModelMpsAb<String>();
-				DefaultListModelMpsAb<String> jld = (DefaultListModelMpsAb<String>)dlmStr;
-				
-				jld.addAll(locsSets.getSetUnit(selected.getPath()).getHMapAlbums().keySet());
-				JList<String> jlStr = (JList<String>)jl2;
-				jlStr.setModel(jld);
-			}
-		});
-		jl2.addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				JList<?> JListSel = (JList<?>)e.getSource();
-				ArrayList<mp3Ident> selectedMp3 = new ArrayList<>();
-				if (e.getValueIsAdjusting() == false) {
-					List<myPathString> list1selected = (List<myPathString>)jl1.getSelectedValuesList();
-					Iterator<myPathString> l1It = list1selected.iterator();
-					List<String> listSelected = (List<String>)JListSel.getSelectedValuesList();
-					Iterator<String> l2It = listSelected.iterator();
-					
-					while (l2It.hasNext()) {
-						String it2String = l2It.next();
-						while (l1It.hasNext()) {
-							myPathString it1String = l1It.next();
-							if (locsSets.getSetUnit(it1String.getPath()).getHMapAlbums().get(it2String) != null)
-							selectedMp3.addAll(locsSets.getSetUnit(it1String.getPath()).getHMapAlbums().get(it2String));
-						}
-					}
-
-				}
-				setFileList(selectedMp3);
-				
-			}
-		});
-	}
-
-	@Override
-	void changeModel() {
-		
-		respModelArt newrm = new respModelArt();
-		model = newrm;
-		
-	}
-
-	@Override
-	public void mp3IdentListChanged() {
-		// TODO Auto-generated method stub
-		DefaultListModelMpsAb<myPathString> myMod = (DefaultListModelMpsAb<myPathString>)dlmMpsAb;
-		myMod.removeAllElements();
-		myMod.addAll(locsSets.getLocsList());
-	}
-
-	@Override
-	public void locsSetsChanged(Object key) {
-		// TODO Auto-generated method stub
-		respModelArt newrm = new respModelArt();
-		model = newrm;
 	}
 }
 

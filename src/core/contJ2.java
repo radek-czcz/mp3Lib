@@ -6,7 +6,7 @@ public class contJ2 extends absContJ{
 	public Dimension getPreferredSize() {
 		return new Dimension(
 				//this.getParent().getSize().width,
-				(((mainFrameCustomized)(this.
+				(((MainFrameCustomized)(this.
 						getParent().
 						getParent().
 						getParent().

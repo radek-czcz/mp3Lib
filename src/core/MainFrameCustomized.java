@@ -10,11 +10,11 @@ import javax.swing.JFrame;
  * @author Kamila i Radek
  *
  */
-public class mainFrameCustomized extends JFrame {
+public class MainFrameCustomized extends JFrame {
 	static final long serialVersionUID = 236L;
 		int restOnWidthDiff = 0;
 		
-		mainFrameCustomized(){
+		MainFrameCustomized(){
 			super();
 			this.addComponentListener(new ComponentListener() {
 				

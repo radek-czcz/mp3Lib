@@ -21,6 +21,8 @@
 	            <value>view</value>
 	            <value>artist set</value>
 	            <value>move to Archive</value>
+	            <value>scan to Archive</value>
+	            <value>compare to archive</value>
         	</array>
 		</property>
 	</bean>

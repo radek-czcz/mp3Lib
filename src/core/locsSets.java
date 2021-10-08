@@ -8,39 +8,42 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 import arch.ArchiveData;
+import arch.TransferedObject;
 import textio.TextIO;
 
-public class locsSets implements Runnable, LocsSetsTransferer {
+public class locsSets implements Runnable {
 		
 		// static vars.
-		private static LocsSetsHashMap<myPathString, locsSets> allSets = new LocsSetsHashMap<>();
+		private static LocsSetsHashMap<MyPathString, locsSets> allSets = new LocsSetsHashMap<>();
 		
-		public static LocsSetsHashMap<myPathString, locsSets> getAllSets() {
+		public static LocsSetsHashMap<MyPathString, locsSets> getAllSets() {
 			return allSets;
 		}
 
 		// instance vars.
-		private myPathString locPath;
-		private HashMap<String, HashSet<mp3Ident>> hMapAlbums = new HashMap<>();
-		private ArrayList<mp3Ident> setUnit;
+		private MyPathString locPath;
+		private HashMap<String, HashSet<Mp3Ident>> hMapAlbums = new HashMap<>();
+		private ArrayList<Mp3Ident> setUnit;
 	
 		/**
 		 * constructor
 		 * @param path
 		 */
 		private locsSets(String path) {
-			locPath = new myPathString(path);
+			locPath = new MyPathString(path);
 			setUnit = new ArrayList<>();
 			allSets.put(locPath, this);
 		}
 		
+		public locsSets(ArchiveData target) {
+			locsSets data = new locsSets();
+		}
+		
 		/**
 		 * constructor for ArchiveData
-		 * @param name - Name of the archive
-		 * @param arch - ArchiveData, to be added to
 		 */
-		public locsSets (ArchiveData arch) {
-		
+		public locsSets () {
+			setUnit = new ArrayList<>();
 		}
 		
 		/**
@@ -48,9 +51,9 @@ public class locsSets implements Runnable, LocsSetsTransferer {
 		 */
 		@Override
 		public void run() {
-			for (myPathString nth: allSets.keySet()) {
-					ArrayList<mp3Ident> innerMp3Identlist = allSets.get(nth).setUnit;
-					for (mp3Ident nth2: innerMp3Identlist) {
+			for (MyPathString nth: allSets.keySet()) {
+					ArrayList<Mp3Ident> innerMp3Identlist = allSets.get(nth).setUnit;
+					for (Mp3Ident nth2: innerMp3Identlist) {
 						if ( ! nth2.fileM.exists());
 						innerMp3Identlist.remove(nth2);
 				}
@@ -80,10 +83,10 @@ public class locsSets implements Runnable, LocsSetsTransferer {
 		 */
 		static locsSets getSetUnit(String keyS){
 				
-				myPathString str = new myPathString(keyS);
-				Iterator<myPathString> overKeys = allSets.keySet().iterator();
+				MyPathString str = new MyPathString(keyS);
+				Iterator<MyPathString> overKeys = allSets.keySet().iterator();
 				while (overKeys.hasNext()) {
-				myPathString runner = overKeys.next();
+				MyPathString runner = overKeys.next();
 				if (str.getPath().startsWith(runner.getPath() + "\\") || 
 						str.getPath().equals(runner.getPath()) )
 					return allSets.get(runner);
@@ -105,8 +108,8 @@ public class locsSets implements Runnable, LocsSetsTransferer {
 		 * returns list to view in column viewer
 		 * @return
 		 */
-		static ArrayList<myPathString> getLocsList() {
-			ArrayList<myPathString> ret = new ArrayList<>();
+		static ArrayList<MyPathString> getLocsList() {
+			ArrayList<MyPathString> ret = new ArrayList<>();
 			ret.addAll(allSets.keySet());
 			return ret;
 		}
@@ -117,7 +120,7 @@ public class locsSets implements Runnable, LocsSetsTransferer {
 		 * returns path only
 		 * @return
 		 */
-		myPathString getLocPath(){
+		public MyPathString getLocPath(){
 			return locPath;
 		}
 		
@@ -125,39 +128,34 @@ public class locsSets implements Runnable, LocsSetsTransferer {
 		 * adds mp3Ident to his location collection
 		 * @param toAdd
 		 */
-		void addMp3(mp3Ident toAdd) {
+		void addMp3(Mp3Ident toAdd) {
 			this.setUnit.add(toAdd);
 			
 			// artist-album map creation
 				
 				String keyS = toAdd.tagArt + " - " + toAdd.tagAlb;
 				if (hMapAlbums.containsKey(keyS)) {
-					HashSet<mp3Ident> listGet;
+					HashSet<Mp3Ident> listGet;
 					listGet = hMapAlbums.get(keyS);
 					listGet.add(toAdd);
 				} else {
-					HashSet<mp3Ident> newAl = new HashSet<>();
+					HashSet<Mp3Ident> newAl = new HashSet<>();
 					hMapAlbums.put(keyS, newAl);
 					newAl.add(toAdd);
 				}
 		}
 		
 
-		ArrayList<mp3Ident> getSongs(){
+		public ArrayList<Mp3Ident> getSongs(){
 			return setUnit;
 		}
 
 		// instance methods
 		
-		HashMap<String, HashSet<mp3Ident>> getHMapAlbums(){
+		HashMap<String, HashSet<Mp3Ident>> getHMapAlbums(){
 			return hMapAlbums;
 		}
 
-
-		/**
-		 * moves locsSets ArrayList of mp3Ident to archive file
-		 */
-		@Override
 		public void transferToArchive() {
 			String checkedPath = startCl.fPaths.getPath();
 			if (checkedPath == null) {
@@ -165,30 +163,19 @@ public class locsSets implements Runnable, LocsSetsTransferer {
 			} else {
 				checkedPath = startCl.fPaths.getPath() + "archive.dat";
 			}
-			try (FileOutputStream fos = new FileOutputStream(checkedPath, true);
-					ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+			try (
+					FileOutputStream fos = new FileOutputStream(checkedPath, true);
+					ObjectOutputStream oos = new ObjectOutputStream(fos)
+				) 
+			{
 				while (!getSongs().isEmpty()) {
-					mp3Ident thisMp3 = getSongs().get(0);
-					//System.out.println(getSongs().size());
-					//ystem.out.println(thisMp3.fileM.getPath());
+					Mp3Ident thisMp3 = getSongs().get(0);
 					oos.writeObject(thisMp3);
 					getSongs().remove(thisMp3);
-					//System.out.println(getSongs().size());
-					/*if (getSongs().size() == 1) {
-						System.out.println("loop ended");
-					}*/
-					//System.out.println(getSongs().size());
-				}  
-				//System.out.println("------empty");
+				}
 				oos.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
-
-		@Override
-		public void transferToCurrent() {
-			// TODO Auto-generated method stub
-			
 		}
 }

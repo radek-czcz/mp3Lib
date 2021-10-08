@@ -1,7 +1,6 @@
 package core;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class LocsSetsHashMap<K, V> extends HashMap<K, V> {
 	
@@ -15,12 +14,12 @@ public class LocsSetsHashMap<K, V> extends HashMap<K, V> {
 		// TODO Auto-generated method stub
 		V temp;
 		for (ILocsSetsListener locsSetsListener : listenersList) {
-			if (locsSetsListener instanceof respModel) {}
+			if (locsSetsListener instanceof RespModel) {}
 			else locsSetsListener.locsSetsChanged(key);
 		}
 		temp = super.remove(key);
 		for (ILocsSetsListener locsSetsListener : listenersList) {
-			if (locsSetsListener instanceof respModel) {
+			if (locsSetsListener instanceof RespModel) {
 			locsSetsListener.locsSetsChanged(key);
 			} else {}
 		}

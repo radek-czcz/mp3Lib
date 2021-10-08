@@ -43,14 +43,14 @@ import javax.swing.table.TableModel;
  * 
  * @author Kamila i Radek
  */
-public class tabModCust {
+public class TabModCust {
 
 	// class variables
 	static JFrame locsWindowFrame;
 	static JTable locsTable;
 
 	// constructor
-	tabModCust() {
+	TabModCust() {
 		locsWindowFrame = new JFrame();
 		locsTable = new JTable(new extAbstrTab());
 		setDisplayWindow();
