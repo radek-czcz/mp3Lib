@@ -288,7 +288,7 @@ public class startCl {
 						.getSelectedValuesList().get(0).toString()).transferToArchive();
 				break loop;
 			case "11":
-				ArchiveData.LocAndNameWindow.main();
+				ArchiveData.LocAndNameWindow.first();
 				break loop;
 			case "12":
 				new CompareToArchiveWindow(

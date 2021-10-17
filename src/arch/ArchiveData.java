@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.ItemSelectable;
 import java.awt.LayoutManager;
 import java.awt.Window;
@@ -11,35 +10,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.swing.AbstractButton;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.RootPaneContainer;
 import javax.swing.text.JTextComponent;
 
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import core.locsSets;
+import core.Mp3Ident;
 import core.Scanning;
-import entry.PathProvider;
+
 
 
 
@@ -68,6 +59,7 @@ public class ArchiveData implements Comparable<ArchiveData>, TransferedObject, S
 	}
 
 	ArchiveData() {
+		new locsSets(this);
 	}
 
 @Override
@@ -81,10 +73,6 @@ public static class LocAndNameWindow {
 	private static String name;
 	private static File path;
 	
-	public static void main() {
-		first();
-	}
-	
 	public static void first() {
 		
 		ApplicationContext aC = new ClassPathXmlApplicationContext("config2.xml");
@@ -97,7 +85,6 @@ public static class LocAndNameWindow {
 		JComponent jL;
 		{
 		Container cntr2 = (Container)cntr.getComponent(0);
-		System.out.println("end");
 		}
 		rpc.getContentPane().setLayout((LayoutManager)aC.getBean("layout"));
 		
@@ -171,7 +158,9 @@ public static class LocAndNameWindow {
 				ItemSelectable iS = (ItemSelectable)c3;
 				Object[] archive = iS.getSelectedObjects();
 				ArchiveData newArchive = new ArchiveData();
+				// name new archive
 				newArchive.name = stringComp.getText();
+				// scan data and add to created ArchiveData
 				newArchive.data = Scanning.scanFolders(new File((String)iS.getSelectedObjects()[0].toString()));
 				try {
 				newArchive.addToSetOfArchives();
@@ -229,8 +218,15 @@ public String getOwner() {
 }
 
 @Override
-public ArrayList<Object> getObjects() {
-	ArrayList<Object> retVal = new ArrayList<>(data.getSongs());
+public ArrayList<Mp3Ident> getObjects() {
+	ArrayList<Mp3Ident> retVal = new ArrayList<>();
+	if (data != null && data.getSongs() != null && !data.getSongs().isEmpty()) {
+		retVal = (ArrayList)data.getSongs();
+		return retVal;
+	}
+	else
+		data.getSongs().addAll(Scanning.readArchiveFile(name));
+	retVal = (ArrayList)data.getSongs();
 	return retVal;
 }
 
@@ -238,5 +234,13 @@ public ArrayList<Object> getObjects() {
 public String toString() {
 	// TODO Auto-generated method stub
 	return this.getName();
+}
+
+public void setData(locsSets data) {
+	this.data = data;
+}
+
+public locsSets getData() {
+	return data;
 }
 }

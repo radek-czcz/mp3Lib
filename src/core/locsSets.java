@@ -37,13 +37,20 @@ public class locsSets implements Runnable {
 		
 		public locsSets(ArchiveData target) {
 			locsSets data = new locsSets();
+			target.setData(data);
 		}
 		
 		/**
 		 * constructor for ArchiveData
 		 */
 		public locsSets () {
-			setUnit = new ArrayList<>();
+			setUnit = new ArrayList<>() {
+				@Override
+				public String toString() {
+					// TODO Auto-generated method stub
+					return super.toString() + "\n";
+				}
+			};
 		}
 		
 		/**
@@ -177,5 +184,15 @@ public class locsSets implements Runnable {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		public ArrayList<Mp3Ident> compareTo(locsSets inp) {
+			//this.getSongs().removeAll(inp.getSongs());
+			int size = inp.getSongs().size();
+			inp.getSongs().removeAll(getSongs());
+			size -=  inp.getSongs().size();
+			System.out.println(size);
+			return inp.getSongs();
+				//return this.getSongs();		
 		}
 }

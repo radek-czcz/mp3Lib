@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Iterator;
 
+import core.Mp3Ident;
 import core.LocsSetsTransferer;
-import core.startCl;
 
 public class ArchiveTransferer implements LocsSetsTransferer {
 
@@ -24,13 +24,16 @@ public class ArchiveTransferer implements LocsSetsTransferer {
 		if (!dir.exists()) {
 			dir.mkdir();
 		}
-		FileOutputStream fos = new FileOutputStream("archivefiles//" + to.getName() + ".ada", true);
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		Iterator<Object> iter = to.getObjects().iterator();
-		while (iter.hasNext()) {
-		oos.writeObject(iter.next());
-		}
-		oos.close();
+		Iterator<Mp3Ident> iter = to.getObjects().iterator();
+		while (iter.hasNext())
+			try (FileOutputStream fos = new FileOutputStream("archivefiles//" + to.getName() + ".ada", true);
+				ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+				oos.writeObject(iter.next());
+				oos.close();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 	@Override

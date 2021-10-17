@@ -8,8 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import core.locsSets;
 
@@ -27,7 +25,6 @@ public class CompareToArchiveWindow {
 		JButton compareButton = new JButton("compare");
 
 		//JList list = new JList<>(ArchiveData.getSetOfArchives().toArray());
-		String[] sA = new String[]{"monday", "tuesday"};
 		ArchiveData.readListOfArchiveData();
 		JList<ArchiveData> list = new JList(ArchiveData.getSetOfArchives().toArray());
 		SelectionListenerArchiveFile sL = new SelectionListenerArchiveFile();
@@ -35,9 +32,10 @@ public class CompareToArchiveWindow {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				ArchiveData aD = sL.getSelected();
+				aD.getObjects();
 				locsSets toCompare = selected;
+				toCompare.compareTo(aD.getData());
 				
 			}
 		});

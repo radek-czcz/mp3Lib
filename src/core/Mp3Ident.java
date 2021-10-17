@@ -1,5 +1,7 @@
 package core;
 
+import static org.junit.Assert.assertFalse;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -25,7 +27,7 @@ import textio.TextIO;
  * @author Kamila i Radek
  *
  */
-class Mp3Ident implements Serializable {
+public class Mp3Ident implements Serializable {
 
 		File fileM;
 		String tagGen;
@@ -225,5 +227,20 @@ class Mp3Ident implements Serializable {
 				return sb.toString();
 		}
 
+		@Override
+		public boolean equals(Object obj) {
+			// TODO Auto-generated method stub
+			//return super.equals(obj);
+			Mp3Ident thisMp3 = (Mp3Ident)this;
+			Mp3Ident inpMp3 = (Mp3Ident)obj;
+			if (thisMp3.tagArt != inpMp3.tagArt ||
+				thisMp3.tagAlb != inpMp3.tagAlb ||
+				thisMp3.tagTit != inpMp3.tagTit	) {
+			return false;
+			} else {
+			return true;
+			}
+}
+		
 		
 }

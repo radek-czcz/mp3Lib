@@ -15,6 +15,7 @@ import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -105,7 +106,9 @@ public class Scanning {
 				if (wrk.listFiles().length == 0) {
 					wrk.delete();
 				} else
+					try {
 					temp.getSongs().addAll(scanFolders(wrk).getSongs());
+					} catch (NullPointerException e) {}
 			} else {
 				try {
 					song = new Mp3Ident(wrk);
@@ -161,15 +164,14 @@ public class Scanning {
 	 * @return
 	 */
 	static Mp3Ident readMp3idFromDataFile(File inp, FileInputStream fisInp) throws EOFException {
-		locsSets lcSet = null;
+
 		Mp3Ident mp3 = null;
 		ObjectInputStream ois = null;
-		FileInputStream fis = null;
 
 		try {
 			ois = new ObjectInputStream(fisInp);
 		} catch (IOException e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 			if (e.getClass() == EOFException.class) {
 				System.out.println("End of file reached");
 				throw (EOFException) e;
@@ -178,7 +180,7 @@ public class Scanning {
 		try {
 			mp3 = (Mp3Ident) ois.readObject();
 		} catch (EOFException | NullPointerException e) {
-			return null;
+			e.printStackTrace();
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
@@ -214,38 +216,17 @@ public class Scanning {
 					System.out.println(buff.fileM.getPath() + " not added. Path belongs not to locsSets");
 				}
 			} catch (EOFException w) {
-				//locsSets.getSetUnit("sss");
-				return;
-				
+				w.printStackTrace();
+				break;
 			}
 		}
-	}
-	
-	/**
-	 * UNUSED. Writing all Objects from data file to TEXT file
-	 * Unused in GUI.
-	 */
-	public static void printToFile(String fileInp) {
-		Mp3Ident mp3;
-		File source = new File(fileInp);
-		FileInputStream fis = null;
 		
 		try {
-			fis = new FileInputStream(source);
-		} catch (FileNotFoundException e) {
-			javax.swing.JOptionPane.showMessageDialog(null, "file not found");
+			fis.close();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		TextIO.writeFile(startCl.fPaths.getPathDriveLetter() + ":\\new.txt");
-		while (true) {
-			try {
-				mp3 = readMp3idFromDataFile(source, fis);
-			} catch (EOFException w) {
-				return;
-			}
-
-			mp3.printOne(mp3);
-		}
+		return;
 	}
 
 	/**
@@ -275,34 +256,32 @@ public class Scanning {
 
 
 
-static void readArchiveFile(String inp) {
+static public ArrayList<Mp3Ident> readArchiveFile(String inp) {
 
-	File source = new File(inp); // = new File(startCl.fPaths.getPathDriveLetter() + ":\\arch31_g.dat");
+	File source = new File("archivefiles//" + inp); // = new File(startCl.fPaths.getPathDriveLetter() + ":\\arch31_g.dat");
 	FileInputStream fis = null;
 	Mp3Ident buff;
+	ArrayList<Mp3Ident> mp3IdentColl = new ArrayList<>();
 
+	if (!source.exists())
+		source = new File("archivefiles//" + inp + ".ada");
 	try {
 		fis = new FileInputStream(source);
 	} catch (FileNotFoundException e) {
 		//javax.swing.JOptionPane.showMessageDialog(null, "file " + source.getAbsolutePath() +  " not found");
 		e.printStackTrace();
-		return;
 	}
 
 	while (true) {
 
 		try {
 			buff = readMp3idFromDataFile(source, fis);
+			mp3IdentColl.add(buff);
 			//Mp3Ident.addToTreeMap(buff);
-			try {
-			//locsSets.getSetUnit(buff.fileM.getParent()).addMp3(buff);
-			} catch (NullPointerException npe) {
-				System.out.println(buff.fileM.getPath() + " not added. Path belongs not to locsSets");
-			}
 		} catch (EOFException w) {
-			return;
-			
+			break;
 		}
 	}
+	return mp3IdentColl;
 }
 }
