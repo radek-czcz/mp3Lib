@@ -233,12 +233,16 @@ public class Mp3Ident implements Serializable {
 			//return super.equals(obj);
 			Mp3Ident thisMp3 = (Mp3Ident)this;
 			Mp3Ident inpMp3 = (Mp3Ident)obj;
-			if (thisMp3.tagArt != inpMp3.tagArt ||
-				thisMp3.tagAlb != inpMp3.tagAlb ||
-				thisMp3.tagTit != inpMp3.tagTit	) {
-			return false;
-			} else {
+			if ((thisMp3.tagArt.equalsIgnoreCase(inpMp3.tagArt) &&
+				thisMp3.tagAlb.equalsIgnoreCase(inpMp3.tagAlb) &&
+				thisMp3.tagTit.equalsIgnoreCase(inpMp3.tagTit)) && 
+				(!thisMp3.tagArt.equalsIgnoreCase("") &&
+				!thisMp3.tagAlb.equalsIgnoreCase("") &&
+				!thisMp3.tagTit.equalsIgnoreCase("")))
+			{
 			return true;
+			} else {
+			return false;
 			}
 }
 		
