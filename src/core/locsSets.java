@@ -9,6 +9,10 @@ import java.util.Iterator;
 
 import arch.ArchiveData;
 import arch.TransferedObject;
+import comparers.EqualityExtenderAbs;
+import comparers.EqualityExtenderBaseFactory;
+import comparers.EqualityExtenderFactory;
+import comparers.EqualityMethExtender2;
 import textio.TextIO;
 
 public class locsSets implements Runnable {
@@ -99,6 +103,7 @@ public class locsSets implements Runnable {
 					return allSets.get(runner);
 				}
 				
+				
 				System.out.println("folder " + keyS + " does not exist in locsSets");
 				return null;
 				
@@ -188,7 +193,15 @@ public class locsSets implements Runnable {
 		
 		public ArrayList<Mp3Ident> compareTo(locsSets inp) {
 			//this.getSongs().removeAll(inp.getSongs());
+			EqualityExtenderBaseFactory factory = new EqualityExtenderFactory();
+			EqualityExtenderAbs extender = factory.createExtender();
+			//ArrayList<EqualityExtenderAbs> ArrList = (ArrayList<EqualityExtenderAbs>)inp.getSongs();
 			int size = inp.getSongs().size();
+			ArrayList<EqualityExtenderAbs> extArr = new ArrayList<>();
+			for (Mp3Ident ident: inp.getSongs()) {
+				EqualityExtenderAbs extAbs = (EqualityExtenderAbs)ident;
+				extArr.add(extAbs);
+			}
 			inp.getSongs().removeAll(getSongs());
 			size -=  inp.getSongs().size();
 			System.out.println(size);

@@ -44,6 +44,7 @@ import com.sun.source.tree.TypeCastTree;
 
 import arch.ArchiveData;
 import arch.CompareToArchiveWindow;
+import entry.AppContext;
 import entry.FilesPaths;
 import entry.IButtonNameProvider;
 import entry.PathProvider;
@@ -62,9 +63,10 @@ public class startCl {
 	// released
 	public static void main(String args[]) {
 		
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("config2.xml");
-		fPaths = (PathProvider)applicationContext.getBean("paths");
-		buttonsNames = (IButtonNameProvider)applicationContext.getBean("buttonsBean");
+		//ApplicationContext applicationContext = new ClassPathXmlApplicationContext("config2.xml");
+		//fPaths = (PathProvider)applicationContext.getBean("paths");
+		fPaths = (PathProvider)AppContext.getContext().getBean("paths");
+		buttonsNames = (IButtonNameProvider)AppContext.getContext().getBean("buttonsBean");
 		
 		
 		System.out.println("dek".toLowerCase().matches("(.*)ek(.*)"));

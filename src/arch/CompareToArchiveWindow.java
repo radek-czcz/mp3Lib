@@ -2,6 +2,7 @@ package arch;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -9,7 +10,10 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
+import comparers.EqualityExtenderAbs;
+import core.Mp3Ident;
 import core.locsSets;
+import entry.AppContext;
 
 public class CompareToArchiveWindow {
 	
@@ -32,6 +36,8 @@ public class CompareToArchiveWindow {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//EqualityExtenderBaseFactory factory = new EqualityExtenderFactory();
+				//EqualityExtenderAbs extender = factory.createExtender();
 				ArchiveData aD = sL.getSelected();
 				aD.getObjects();
 				locsSets toCompare = selected;

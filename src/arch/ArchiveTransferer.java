@@ -30,7 +30,6 @@ public class ArchiveTransferer implements LocsSetsTransferer {
 				ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 				oos.writeObject(iter.next());
 				oos.close();
-				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

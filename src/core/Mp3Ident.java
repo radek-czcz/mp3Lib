@@ -52,7 +52,7 @@ public class Mp3Ident implements Serializable {
 		 * @throws IOException
 		 * @throws CannotReadException
 		 */
-		Mp3Ident(File inp) throws InvalidAudioFrameException, ReadOnlyFileException,
+		protected Mp3Ident(File inp) throws InvalidAudioFrameException, ReadOnlyFileException,
 		TagException, IOException, CannotReadException{
 			AudioFile audioFil = null;
 			try {
@@ -132,7 +132,10 @@ public class Mp3Ident implements Serializable {
 				}**/
 				
 			}
-			
+		
+		protected Mp3Ident() {
+		}
+		
 		/**
 		 * Used by constructor. checking which tags are contained, returns string or TextIO sends data to OutputStream
 		 * Used in constructor.
@@ -229,22 +232,44 @@ public class Mp3Ident implements Serializable {
 
 		@Override
 		public boolean equals(Object obj) {
-			// TODO Auto-generated method stub
-			//return super.equals(obj);
-			Mp3Ident thisMp3 = (Mp3Ident)this;
-			Mp3Ident inpMp3 = (Mp3Ident)obj;
-			if ((thisMp3.tagArt.equalsIgnoreCase(inpMp3.tagArt) &&
-				thisMp3.tagAlb.equalsIgnoreCase(inpMp3.tagAlb) &&
-				thisMp3.tagTit.equalsIgnoreCase(inpMp3.tagTit)) && 
-				(!thisMp3.tagArt.equalsIgnoreCase("") &&
-				!thisMp3.tagAlb.equalsIgnoreCase("") &&
-				!thisMp3.tagTit.equalsIgnoreCase("")))
-			{
 			return true;
-			} else {
-			return false;
-			}
 }
+
+		protected File getFileM() {
+			return fileM;
+		}
+
+		protected String getTagGen() {
+			return tagGen;
+		}
+
+		protected String getTagArt() {
+			return tagArt;
+		}
+
+		protected String getTagAlb() {
+			return tagAlb;
+		}
+
+		protected String getTagTit() {
+			return tagTit;
+		}
+
+		protected String getTagTra() {
+			return tagTra;
+		}
+
+		protected String getTagYea() {
+			return tagYea;
+		}
+
+		protected String getTagCom() {
+			return tagCom;
+		}
+
+		protected int getTagLen() {
+			return tagLen;
+		}
 		
 		
 }
