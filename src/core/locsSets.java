@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import javax.swing.JOptionPane;
+
 import arch.ArchiveData;
 import arch.TransferedObject;
 import comparers.EqualityExtenderAbs;
@@ -92,7 +94,7 @@ public class locsSets implements Runnable {
 		 * @param keyS
 		 * @return
 		 */
-		static locsSets getSetUnit(String keyS){
+		static locsSets getSetUnit(String keyS) throws NullPointerException{
 				
 				MyPathString str = new MyPathString(keyS);
 				Iterator<MyPathString> overKeys = allSets.keySet().iterator();
@@ -102,15 +104,14 @@ public class locsSets implements Runnable {
 						str.getPath().equals(runner.getPath()) )
 					return allSets.get(runner);
 				}
-				
-				
-				System.out.println("folder " + keyS + " does not exist in locsSets");
-				return null;
-				
+				throw new NullPointerException(
+					"setUnit not found in locsSets, for a given key: " + keyS);
 		}
 		
 		static void checkIfExistingAndCreate(String line) {
-			if (getSetUnit(line) == null) {
+			
+			try {locsSets ls = getSetUnit(line);
+			} catch (NullPointerException e) {
 				new locsSets(line);
 				System.out.println("/" + line + "/" + " to locsSets added");
 			}
