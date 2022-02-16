@@ -200,9 +200,15 @@ public class locsSets implements Runnable {
 			int size = inp.getSongs().size();
 			ArrayList<EqualityExtenderAbs> extArr = new ArrayList<>();
 			for (Mp3Ident ident: inp.getSongs()) {
-				EqualityExtenderAbs extAbs = (EqualityExtenderAbs)ident;
-				extArr.add(extAbs);
+				try {
+					EqualityExtenderAbs extAbs2 = new EqualityMethExtender2(ident.getFileM());
+					EqualityExtenderAbs extAbs1 = new EqualityMethExtender2(ident);
+					extArr.add(extAbs2);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
+			extArr.removeAll(getSongs());
 			inp.getSongs().removeAll(getSongs());
 			size -=  inp.getSongs().size();
 			System.out.println(size);

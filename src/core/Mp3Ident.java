@@ -1,6 +1,5 @@
 package core;
 
-import static org.junit.Assert.assertFalse;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,15 +28,15 @@ import textio.TextIO;
  */
 public class Mp3Ident implements Serializable {
 
-		File fileM;
-		String tagGen;
-		String tagArt;
-		String tagAlb;
-		String tagTit;
-		String tagTra;
-		String tagYea;
-		String tagCom;
-		int tagLen;
+		protected File fileM;
+		protected String tagGen;
+		protected String tagArt;
+		protected String tagAlb;
+		protected String tagTit;
+		protected String tagTra;
+		protected String tagYea;
+		protected String tagCom;
+		protected int tagLen;
 
 		public static AllMp3IdentTreeMap<String, TreeMap<String, ArrayList<Mp3Ident>>> arts = new AllMp3IdentTreeMap<>();
 

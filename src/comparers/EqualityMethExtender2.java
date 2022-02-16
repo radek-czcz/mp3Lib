@@ -15,6 +15,7 @@ import core.Mp3Ident;
 
 public class EqualityMethExtender2 extends EqualityExtenderAbs {
 	
+	Mp3Ident mp3;
 	Pattern pattern;
 	Matcher matcher;
 	
@@ -23,11 +24,27 @@ public class EqualityMethExtender2 extends EqualityExtenderAbs {
 		super();
 	}
 	
+	public EqualityMethExtender2(Mp3Ident inp) throws InvalidAudioFrameException, ReadOnlyFileException,
+	TagException, IOException, CannotReadException {
+		this.mp3 = inp;
+		
+	}
+	
+	public EqualityMethExtender2(File inp) throws InvalidAudioFrameException, ReadOnlyFileException, TagException, IOException, CannotReadException {
+		super(inp);
+	};
+	
 	@Override
 	public boolean equals(Object obj) {
 		//return super.equals(obj);
 		pattern = Pattern.compile(getTagAlb(), Pattern.CASE_INSENSITIVE);
 		matcher = pattern.matcher(getTagAlb());
-		return true;
+		return matcher.matches();
+	}
+
+	@Override
+	public boolean equals(Mp3Ident obj) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

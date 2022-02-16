@@ -17,6 +17,11 @@ public abstract class EqualityExtenderAbs extends Mp3Ident {
 		super();
 	}
 	
+	EqualityExtenderAbs(File inp) throws InvalidAudioFrameException, ReadOnlyFileException, TagException, IOException, CannotReadException {
+		super(inp);
+	};
+	
 	@Override
 	public abstract boolean equals(Object obj);
+	public abstract boolean equals(Mp3Ident obj);
 }

@@ -2,7 +2,7 @@ package core;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class LocsSetsHashMap<K, V> extends HashMap<K, V> {
+public class LocsSetsHashMap2 extends HashMap<MyPathString, locsSets> {
 	
 	ArrayList<ILocsSetsListener> listenersList= new ArrayList<>();
 	
@@ -10,9 +10,9 @@ public class LocsSetsHashMap<K, V> extends HashMap<K, V> {
 		listenersList.add(listener);
 	}
 	@Override
-	public V remove(Object key) {
+	public locsSets remove(Object key) {
 		// TODO Auto-generated method stub
-		V temp;
+		locsSets temp;
 		for (ILocsSetsListener locsSetsListener : listenersList) {
 			if (locsSetsListener instanceof RespModel) {}
 			else locsSetsListener.locsSetsChanged(key);
@@ -26,12 +26,12 @@ public class LocsSetsHashMap<K, V> extends HashMap<K, V> {
 		return temp;
 	}
 
-	/*public boolean containsPath(K key) {
+	public boolean containsPath(MyPathString key) {
 		
 		if (str.getPath().startsWith(runner.getPath() + "\\") || 
 				str.getPath().equals(runner.getPath()) )
 			return allSets.get(runner);
 		
 		return false;
-	}*/
+	}
 }
