@@ -1,9 +1,19 @@
 package comparers;
 
-public class EqualityExtenderFactory extends EqualityExtenderBaseFactory {
+public class EqualityExtenderFactory {
+	
+	ConcreteFactory factory;
 
-	@Override
-	public EqualityExtenderAbs createExtender() {
-		return (EqualityExtenderAbs)entry.AppContext.getContext().getBean("CompareExtensionMethodBean");
+	public void setFactory(ConcreteFactory factory) {
+		this.factory = factory;
 	}
+
+	public ConcreteFactory getFactory() {
+		return factory;
+	}
+	
+	public EqualityExtenderFactory() {
+		// TODO Auto-generated constructor stub
+	}
+	
 }

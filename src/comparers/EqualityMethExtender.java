@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 import core.Mp3Ident;
 
-public class EqualityMethExtender extends core.Mp3Ident {
+public class EqualityMethExtender extends EqualityExtenderAbs {
 	
 	Pattern pattern;
 

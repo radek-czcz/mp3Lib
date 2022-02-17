@@ -11,10 +11,12 @@ import javax.swing.JOptionPane;
 
 import arch.ArchiveData;
 import arch.TransferedObject;
+import comparers.ConcreteFactory;
 import comparers.EqualityExtenderAbs;
 import comparers.EqualityExtenderBaseFactory;
 import comparers.EqualityExtenderFactory;
 import comparers.EqualityMethExtender2;
+import entry.AppContext;
 import textio.TextIO;
 
 public class locsSets implements Runnable {
@@ -194,16 +196,18 @@ public class locsSets implements Runnable {
 		
 		public ArrayList<Mp3Ident> compareTo(locsSets inp) {
 			//this.getSongs().removeAll(inp.getSongs());
-			EqualityExtenderBaseFactory factory = new EqualityExtenderFactory();
-			EqualityExtenderAbs extender = factory.createExtender();
+			
+			
 			//ArrayList<EqualityExtenderAbs> ArrList = (ArrayList<EqualityExtenderAbs>)inp.getSongs();
 			int size = inp.getSongs().size();
 			ArrayList<EqualityExtenderAbs> extArr = new ArrayList<>();
 			for (Mp3Ident ident: inp.getSongs()) {
 				try {
-					EqualityExtenderAbs extAbs2 = new EqualityMethExtender2(ident.getFileM());
-					EqualityExtenderAbs extAbs1 = new EqualityMethExtender2(ident);
-					extArr.add(extAbs2);
+					EqualityExtenderFactory factory = AppContext.getContext().getBean(EqualityExtenderFactory.class);
+					ConcreteFactory cf = factory.getFactory();
+					EqualityExtenderAbs ext = cf.createExtender(ident.getFileM());
+					
+					extArr.add(ext);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

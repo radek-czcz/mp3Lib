@@ -19,20 +19,9 @@ public class EqualityMethExtender2 extends EqualityExtenderAbs {
 	Pattern pattern;
 	Matcher matcher;
 	
-	EqualityMethExtender2()
-			throws InvalidAudioFrameException, ReadOnlyFileException, TagException, IOException, CannotReadException {
-		super();
-	}
-	
-	public EqualityMethExtender2(Mp3Ident inp) throws InvalidAudioFrameException, ReadOnlyFileException,
-	TagException, IOException, CannotReadException {
-		this.mp3 = inp;
-		
-	}
-	
 	public EqualityMethExtender2(File inp) throws InvalidAudioFrameException, ReadOnlyFileException, TagException, IOException, CannotReadException {
 		super(inp);
-	};
+	}
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -42,9 +31,8 @@ public class EqualityMethExtender2 extends EqualityExtenderAbs {
 		return matcher.matches();
 	}
 
-	@Override
 	public boolean equals(Mp3Ident obj) {
 		// TODO Auto-generated method stub
 		return false;
-	}
+	}	
 }

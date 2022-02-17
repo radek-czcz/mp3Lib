@@ -5,12 +5,15 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean
-		id="paths" class="entry.FilesPaths">
-		<property
-			name = "pathDriveLetter" value="g">
-		</property>
-	</bean>
+
+	
+
+
+<bean id = "compFactory" class = "comparers.EqualityExtenderFactory">
+<property name="factory"><ref bean = "concComp2" /> </property>
+</bean>
+
+<bean id = "concComp1" class = "comparers.comparer1" ></bean>
+<bean id = "concComp2" class = "comparers.comparer2" ></bean>
 
 </beans>
-
