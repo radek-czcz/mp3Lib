@@ -12,10 +12,11 @@ import javax.swing.JOptionPane;
 import arch.ArchiveData;
 import arch.TransferedObject;
 import comparers.ConcreteFactory;
+import comparers.DifferenceOperator1;
 import comparers.EqualityExtenderAbs;
-import comparers.EqualityExtenderBaseFactory;
 import comparers.EqualityExtenderFactory;
 import comparers.EqualityMethExtender2;
+import comparers.IDifferenceOperator;
 import entry.AppContext;
 import textio.TextIO;
 
@@ -195,13 +196,15 @@ public class locsSets implements Runnable {
 		}
 		
 		public ArrayList<Mp3Ident> compareTo(locsSets inp) {
-			//this.getSongs().removeAll(inp.getSongs());
 			
+			IDifferenceOperator operator;
+
+			int sizeBefore = this.getSongs().size();
+			int sizeAfter;
+			int sizeDeleted;
 			
-			//ArrayList<EqualityExtenderAbs> ArrList = (ArrayList<EqualityExtenderAbs>)inp.getSongs();
-			int size = inp.getSongs().size();
 			ArrayList<EqualityExtenderAbs> extArr = new ArrayList<>();
-			for (Mp3Ident ident: inp.getSongs()) {
+			for (Mp3Ident ident: this.getSongs()) {
 				try {
 					EqualityExtenderFactory factory = AppContext.getContext().getBean(EqualityExtenderFactory.class);
 					ConcreteFactory cf = factory.getFactory();
@@ -212,11 +215,16 @@ public class locsSets implements Runnable {
 					e.printStackTrace();
 				}
 			}
-			extArr.removeAll(getSongs());
-			inp.getSongs().removeAll(getSongs());
-			size -=  inp.getSongs().size();
-			System.out.println(size);
+			ArrayList<EqualityExtenderAbs> extArr2 = extArr;
+			extArr2.retainAll(inp.getSongs());
+			operator = new DifferenceOperator1(extArr2);
+			extArr.removeAll(inp.getSongs());
+			this.getSongs().removeAll(inp.getSongs());
+			
+			sizeAfter =  this.getSongs().size();
+			sizeDeleted = sizeBefore - sizeAfter;
+			System.out.println(sizeDeleted + " songs have been deleted");
+			
 			return inp.getSongs();
-				//return this.getSongs();		
 		}
 }
