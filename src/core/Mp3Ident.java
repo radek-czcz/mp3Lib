@@ -232,41 +232,41 @@ public class Mp3Ident implements Serializable {
 		@Override
 		public boolean equals(Object obj) {
 			return true;
-}
+		}
 
-		protected File getFileM() {
+		public File getFileM() {
 			return fileM;
 		}
 
-		protected String getTagGen() {
+		public String getTagGen() {
 			return tagGen;
 		}
 
-		protected String getTagArt() {
+		public String getTagArt() {
 			return tagArt;
 		}
 
-		protected String getTagAlb() {
+		public String getTagAlb() {
 			return tagAlb;
 		}
 
-		protected String getTagTit() {
+		public String getTagTit() {
 			return tagTit;
 		}
 
-		protected String getTagTra() {
+		public String getTagTra() {
 			return tagTra;
 		}
 
-		protected String getTagYea() {
+		public String getTagYea() {
 			return tagYea;
 		}
 
-		protected String getTagCom() {
+		public String getTagCom() {
 			return tagCom;
 		}
 
-		protected int getTagLen() {
+		public int getTagLen() {
 			return tagLen;
 		}
 		

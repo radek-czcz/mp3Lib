@@ -26,7 +26,7 @@ public class EqualityMethExtender extends EqualityExtenderAbs {
 	public boolean equals(Object obj) {
 		//return super.equals(obj);
 		EqualityMethExtender thisMp3 = (EqualityMethExtender)this;
-		EqualityMethExtender inpMp3 = (EqualityMethExtender)obj;
+		Mp3Ident inpMp3 = (Mp3Ident)obj;
 		if ((thisMp3.getTagArt().equalsIgnoreCase(inpMp3.getTagArt()) &&
 			thisMp3.getTagAlb().equalsIgnoreCase(inpMp3.getTagAlb()) &&
 			thisMp3.getTagTit().equalsIgnoreCase(inpMp3.getTagTit())) && 

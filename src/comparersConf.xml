@@ -9,11 +9,13 @@
 	
 
 
-<bean id = "compFactory" class = "comparers.EqualityExtenderFactory">
-<property name="factory"><ref bean = "concComp2" /> </property>
-</bean>
+	<bean id="compFactory" class="comparers.EqualityExtenderFactory">
+		<property name="factory">
+			<ref bean="concComp2" />
+		</property>
+	</bean>
 
-<bean id = "concComp1" class = "comparers.comparer1" ></bean>
+	<bean id = "concComp1" class = "comparers.comparer1" ></bean>
 <bean id = "concComp2" class = "comparers.comparer2" ></bean>
 
 </beans>

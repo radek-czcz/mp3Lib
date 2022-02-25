@@ -146,9 +146,9 @@ public class Scanning {
 		//JFileChooser jfc = new JFileChooser();
 		//jfc.showSaveDialog(null);
 		try (FileOutputStream fos = new FileOutputStream(startCl.fPaths.getPathDriveLetter() + ":\\arch31_g.dat", true);
-				ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-			oos.writeObject(inp);
-			oos.close();
+			ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+				oos.writeObject(inp);
+				oos.close();
 			
 		} catch (IOException e) {
 			e.printStackTrace();

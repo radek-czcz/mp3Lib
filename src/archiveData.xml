@@ -38,7 +38,4 @@
 		<constructor-arg value="enter name"/>
 	</bean>
 	
-	<bean id="CompareExtensionMethodBean" class="comparers.EqualityMethExtender2">
-	</bean>
-	
 </beans>
