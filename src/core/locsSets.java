@@ -11,12 +11,14 @@ import javax.swing.JOptionPane;
 
 import arch.ArchiveData;
 import arch.TransferedObject;
-import comparers.ConcreteFactory;
+import comparers.IEqualityExtenderFactory;
 import comparers.DifferenceOperator1;
+import comparers.DifferenceOperatorBaseFactory;
 import comparers.EqualityExtenderAbs;
-import comparers.EqualityExtenderFactory;
+import comparers.EqualityExtenderBaseFactory;
 import comparers.EqualityMethExtender2;
 import comparers.IDifferenceOperator;
+import comparers.IDifferenceOperatorFactory;
 import entry.AppContext;
 import textio.TextIO;
 
@@ -198,6 +200,7 @@ public class locsSets implements Runnable {
 		public ArrayList<Mp3Ident> compareTo(locsSets inp) {
 			
 			IDifferenceOperator operator;
+			ArrayList<EqualityExtenderAbs> extArr2;
 
 			int sizeBefore = this.getSongs().size();
 			int sizeAfter;
@@ -206,8 +209,8 @@ public class locsSets implements Runnable {
 			ArrayList<EqualityExtenderAbs> extArr = new ArrayList<>();
 			for (Mp3Ident ident: this.getSongs()) {
 				try {
-					EqualityExtenderFactory factory = AppContext.getContext().getBean(EqualityExtenderFactory.class);
-					ConcreteFactory cf = factory.getFactory();
+					EqualityExtenderBaseFactory factory = AppContext.getContext().getBean(EqualityExtenderBaseFactory.class);
+					IEqualityExtenderFactory cf = factory.getFactory();
 					EqualityExtenderAbs ext = cf.createExtender(ident.getFileM());
 					
 					extArr.add(ext);
@@ -215,9 +218,19 @@ public class locsSets implements Runnable {
 					e.printStackTrace();
 				}
 			}
-			ArrayList<EqualityExtenderAbs> extArr2 = extArr;
+			
+			extArr2 = extArr;
 			extArr2.retainAll(inp.getSongs());
+			System.out.println(extArr2);
+			DifferenceOperatorBaseFactory factory2 = AppContext.getContext().getBean(DifferenceOperatorBaseFactory.class);
+			IDifferenceOperatorFactory dOF = factory2.getFactory();
+			IDifferenceOperator dO = dOF.createOperator(this.getSongs());
+	
+			dO.operateOnDifference();
+			
 			operator = new DifferenceOperator1(extArr2);
+			operator.operateOnDifference();
+			
 			extArr.removeAll(inp.getSongs());
 			this.getSongs().removeAll(inp.getSongs());
 			

@@ -212,6 +212,7 @@ public class Mp3Ident implements Serializable {
 
 		public String toString() {
 				StringBuffer sb = new StringBuffer();
+				sb.append("\r\n");
 				if (!tagGen.equals(""))
 					sb.append(tagGen);
 				if (!tagArt.equals("") && !sb.toString().equals(""))
@@ -226,6 +227,7 @@ public class Mp3Ident implements Serializable {
 					sb.append(" ; " + tagTit);
 				else if(!tagTit.equals("") && sb.toString().equals(""))
 					sb.append(tagTit);
+				
 				return sb.toString();
 		}
 

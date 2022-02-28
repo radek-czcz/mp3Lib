@@ -8,13 +8,13 @@ import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 
-public class comparer1 implements ConcreteFactory {
+public class EqualityExtenderFactory3 implements IEqualityExtenderFactory {
 
 	@Override
 	public EqualityExtenderAbs createExtender(File inp) {
 		// TODO Auto-generated method stub
 		try {
-			return new EqualityMethExtender2(inp);
+			return new EqualityMethExtender3(inp);
 		} catch (InvalidAudioFrameException | ReadOnlyFileException | TagException | IOException
 				| CannotReadException e) {
 			// TODO Auto-generated catch block
@@ -22,4 +22,6 @@ public class comparer1 implements ConcreteFactory {
 		}
 		return null;
 	}
+	
+	
 }

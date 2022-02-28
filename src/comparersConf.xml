@@ -9,13 +9,21 @@
 	
 
 
-	<bean id="compFactory" class="comparers.EqualityExtenderFactory">
+	<bean id="compFactory" class="comparers.EqualityExtenderBaseFactory">
 		<property name="factory">
-			<ref bean="concComp2" />
+			<ref bean="concComp3" />
 		</property>
 	</bean>
 
-	<bean id = "concComp1" class = "comparers.comparer1" ></bean>
-<bean id = "concComp2" class = "comparers.comparer2" ></bean>
-
+	<bean id = "concComp1" class = "comparers.EqualityExtenderFactory1" ></bean>
+	<bean id = "concComp2" class = "comparers.EqualityExtenderFactory2" ></bean>
+	<bean id = "concComp3" class = "comparers.EqualityExtenderFactory3" ></bean>
+	
+	<bean id = "DiffOp" class = "comparers.DifferenceOperatorBaseFactory">
+		<property name = "factory">
+			<ref bean = "ConcDiffOp1"/>
+		</property>
+	</bean>
+	
+	<bean id = "ConcDiffOp1" class = "comparers.DifferenceOperatorFactory1"></bean>
 </beans>
