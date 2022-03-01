@@ -34,7 +34,7 @@ public class DifferenceOperator1 implements IDifferenceOperator {
 		
 	}
 
-	public void setToOperate(Collection<? extends Mp3Ident> toOperate) {
+	public void setSmthToOperate(Collection<? extends Mp3Ident> toOperate) {
 		this.toOperate = toOperate;
 	}
 }

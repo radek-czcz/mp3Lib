@@ -19,6 +19,7 @@ import comparers.EqualityExtenderBaseFactory;
 import comparers.EqualityMethExtender2;
 import comparers.IDifferenceOperator;
 import comparers.IDifferenceOperatorFactory;
+import comparers.DifferenceOperatorFactory;
 import entry.AppContext;
 import textio.TextIO;
 
@@ -222,17 +223,16 @@ public class locsSets implements Runnable {
 			extArr2 = extArr;
 			extArr2.retainAll(inp.getSongs());
 			System.out.println(extArr2);
-			DifferenceOperatorBaseFactory factory2 = AppContext.getContext().getBean(DifferenceOperatorBaseFactory.class);
+			/*DifferenceOperatorBaseFactory factory2 = AppContext.getContext()
+					.getBean(DifferenceOperatorBaseFactory.class);
 			IDifferenceOperatorFactory dOF = factory2.getFactory();
-			IDifferenceOperator dO = dOF.createOperator(this.getSongs());
-	
+			IDifferenceOperator dO = dOF.createOperator(this.getSongs());*/
+			DifferenceOperatorFactory factory2 = AppContext.getContext()
+					.getBean(DifferenceOperatorFactory.class);
+			IDifferenceOperator dO = factory2.getOperator();
+			dO.setSmthToOperate(getSongs());
+			
 			dO.operateOnDifference();
-			
-			operator = new DifferenceOperator1(extArr2);
-			operator.operateOnDifference();
-			
-			extArr.removeAll(inp.getSongs());
-			this.getSongs().removeAll(inp.getSongs());
 			
 			sizeAfter =  this.getSongs().size();
 			sizeDeleted = sizeBefore - sizeAfter;

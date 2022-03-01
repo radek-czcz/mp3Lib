@@ -26,4 +26,13 @@
 	</bean>
 	
 	<bean id = "ConcDiffOp1" class = "comparers.DifferenceOperatorFactory1"></bean>
+	
+	<bean id = "DiOp" class = "comparers.DifferenceOperatorFactory">
+		<property name="operator"> 
+			<ref bean = "DiOp1"/>
+		</property>
+	</bean>
+	
+	<bean name = "DiOp1" class = "comparers.DifferenceOperator1"></bean>
+	
 </beans>
