@@ -1,6 +1,7 @@
 package core;
 
 
+import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -38,7 +39,12 @@ public class Mp3Ident implements Serializable {
 		protected String tagCom;
 		protected int tagLen;
 
-		public static AllMp3IdentTreeMap<String, TreeMap<String, ArrayList<Mp3Ident>>> arts = new AllMp3IdentTreeMap<>();
+		private static AllMp3IdentTreeMap<String, TreeMap<String, ArrayList<Mp3Ident>>> allMusic = new AllMp3IdentTreeMap<>();
+
+ 		PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
+		
+		protected Mp3Ident() {
+		}
 
 		/**
 		 * Constructor for mp3Ident - reads tags from input mp3 file with jaudiotagger,
@@ -60,6 +66,7 @@ public class Mp3Ident implements Serializable {
 				ReadOnlyFileException | InvalidAudioFrameException e) {
 				if (!(e instanceof InvalidAudioFrameException)) {
 					e.printStackTrace();
+					throw e;
 				}
 				if (e instanceof InvalidAudioFrameException) {
 					throw e;
@@ -74,6 +81,7 @@ public class Mp3Ident implements Serializable {
 				mFile = new MP3File(inp);
 			} catch (IOException | TagException | ReadOnlyFileException | CannotReadException
 					| InvalidAudioFrameException e) {
+				//throw e;
 			}
 			finally {
 				if (mFile == null)
@@ -94,46 +102,9 @@ public class Mp3Ident implements Serializable {
 			/*audioFil.getFile().getParent()+";"
 			audioFil.getFile().getName()*/
 			
-	// temporary test
-			
 			addToTreeMap(this);
-	
-			/**if (arts.get(tagArt) == null) {
-				TreeMap<String, ArrayList<String>> workedA = new TreeMap<>();
-				ArrayList<String> workedS = new ArrayList<>();
-				workedS.add(tagTit);
-				workedA.put(tagAlb, workedS);
-				arts.put(tagArt, workedA);
+			
 			}
-			else {
-				if (arts.get(tagArt).keySet().contains(tagAlb)){
-					arts.get(tagArt).get(tagAlb).add(tagTit);
-				}
-				else {
-					ArrayList<String> titArr = new ArrayList<>(); 
-					titArr.add(tagTit);
-					arts.get(tagArt).put(tagAlb, titArr);
-				}
-				
-				if (tagCom == "rat4") {
-					
-				}**/
-					
-				/**TreeMap<String, ArrayList<String>> workedA = arts.get(tagAlb);
-				if (workedA == null) {
-					ArrayList<String> workedS = new ArrayList<>();
-					workedS.add(tagTit);
-					workedA = new TreeMap<String, ArrayList<String>>();
-					workedA.put(tagAlb, workedS);
-				}
-				else {
-					worked.get(tagArt).get(tagAlb).add(tagTit);
-				}**/
-				
-			}
-		
-		protected Mp3Ident() {
-		}
 		
 		/**
 		 * Used by constructor. checking which tags are contained, returns string or TextIO sends data to OutputStream
@@ -147,15 +118,12 @@ public class Mp3Ident implements Serializable {
 			
 			//chcecking which tags are contained
 				if (Tag2.hasField(fK)) {
-					//TextIO.put(Tag2.getFirst(fK)+";");
 					return Tag2.getFirst(fK)+"";
 				}
 				else {
 					if (Tag1 != null && Tag1.hasField(fK)) 
-						//TextIO.put(Tag1.getValue(fK, 1)+";");
 						return Tag1.getValue(fK, 1)+"";
 					else
-						//TextIO.put(";");
 						return "";
 			}
 		}
@@ -165,7 +133,7 @@ public class Mp3Ident implements Serializable {
 		 * @param inp
 		 */
 		static void addToTreeMap(Mp3Ident inp){
-			if (arts.get(inp.tagArt) == null) {
+			if (getAllMusic().get(inp.tagArt) == null) {
 				//create mp3Ident list
 				ArrayList<Mp3Ident> tListSongs = new ArrayList<>();
 				//put mp3Ident to list
@@ -175,40 +143,27 @@ public class Mp3Ident implements Serializable {
 				//associate list with album key
 				tMapSongs.put(inp.tagAlb, tListSongs);
 				//associate album with artist
-				arts.put(inp.tagArt, tMapSongs);
+				getAllMusic().put(inp.tagArt, tMapSongs);
 			}
 			else {
-				if (arts.get(inp.tagArt).keySet().contains(inp.tagAlb)){
-					arts.get(inp.tagArt).get(inp.tagAlb).add(inp);
+				if (getAllMusic().get(inp.tagArt).keySet().contains(inp.tagAlb)){
+					getAllMusic().get(inp.tagArt).get(inp.tagAlb).add(inp);
 				}
 				else {
 					ArrayList<Mp3Ident> titArr = new ArrayList<>(); 
 					titArr.add(inp);
-					arts.get(inp.tagArt).put(inp.tagAlb, titArr);
+					getAllMusic().get(inp.tagArt).put(inp.tagAlb, titArr);
 				}
 			}
 		}
-		
-		/**
-		 * UNUSED. writes one record to txt file, from collMus array.
-		 * @param mp3Inp
-		 */
-		void printOne(Mp3Ident mp3Inp) {
-		
-			Scanner scr = new Scanner(tagCom);
-		
-				TextIO.put(tagGen);
-				TextIO.put(tagArt);
-				TextIO.put(tagAlb);
-				TextIO.put(tagTit);
-				TextIO.put(tagTra);
-				TextIO.put(tagYea);
-				TextIO.put(scr.nextLine()+";");
-				scr.close();
-				TextIO.put(tagLen);
-				TextIO.put(fileM.getParentFile().getPath()+";");
-				TextIO.putln(fileM.getName()+";");
-			}
+
+		public static AllMp3IdentTreeMap<String, TreeMap<String, ArrayList<Mp3Ident>>> getAllMusic() {
+			return allMusic;
+		}
+
+		public static void setAllMusic(AllMp3IdentTreeMap<String, TreeMap<String, ArrayList<Mp3Ident>>> allMusic) {
+			Mp3Ident.allMusic = allMusic;
+		}
 
 		public String toString() {
 				StringBuffer sb = new StringBuffer();
@@ -229,11 +184,6 @@ public class Mp3Ident implements Serializable {
 					sb.append(tagTit);
 				
 				return sb.toString();
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			return true;
 		}
 
 		public File getFileM() {
@@ -271,6 +221,4 @@ public class Mp3Ident implements Serializable {
 		public int getTagLen() {
 			return tagLen;
 		}
-		
-		
 }

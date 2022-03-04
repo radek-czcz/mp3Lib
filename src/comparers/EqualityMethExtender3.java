@@ -34,7 +34,7 @@ public class EqualityMethExtender3 extends EqualityExtenderAbs {
 			thisMp3.getTagGen().equalsIgnoreCase(inpMp3.getTagGen()) &&
 			thisMp3.getTagCom().equalsIgnoreCase(inpMp3.getTagCom()) &&
 			thisMp3.getTagYea().equalsIgnoreCase(inpMp3.getTagYea()) &&
-			thisMp3.getTagLen() == (inpMp3.getTagLen())) &&
+			thisMp3.getTagLen() == inpMp3.getTagLen()) &&
 			(!thisMp3.getTagArt().equalsIgnoreCase("") &&
 			!thisMp3.getTagAlb().equalsIgnoreCase("") &&
 			!thisMp3.getTagTit().equalsIgnoreCase("")

@@ -59,8 +59,8 @@ public abstract class RespModel implements Mp3IdentListListener,
 	}
 	
 	static void createFirst(){
-		model = new respModelArt();
-		Mp3Ident.arts.registerListener(model);
+		model = new respModelDir();
+		Mp3Ident.getAllMusic().registerListener(model);
 		locsSets.getAllSets().registerListener(model);
 	}
 	
@@ -81,7 +81,7 @@ class respModelArt extends RespModel {
 		//jl2 = new JList<String>();
 		JList<String> jlRef1 = (JList<String>)jl1;
 		jlRef1.setModel(methVar);
-		Set<String> toAdd = Mp3Ident.arts.keySet();
+		Set<String> toAdd = Mp3Ident.getAllMusic().keySet();
 		methVar.addAll(toAdd);
 		scnd();
 	}
@@ -129,7 +129,7 @@ class respModelArt extends RespModel {
 
 					while (itListSelected.hasNext()) {
 						valItSel = itListSelected.next();
-						TreeMap<String, ArrayList<Mp3Ident>> tryStr = Mp3Ident.arts.get(valItSel);
+						TreeMap<String, ArrayList<Mp3Ident>> tryStr = Mp3Ident.getAllMusic().get(valItSel);
 						
 						//add albums to be viewed in JL2
 						Set<String> newStrArr = tryStr.keySet();
@@ -174,7 +174,7 @@ class respModelArt extends RespModel {
 					Iterator<String> selectedArtistIterator = nStrArrArt.iterator();
 					while (selectedArtistIterator.hasNext()) {
 						String artistVe = selectedArtistIterator.next();
-						TreeMap<String, ArrayList<Mp3Ident>> mapAlbumToSongList = Mp3Ident.arts.get(artistVe);
+						TreeMap<String, ArrayList<Mp3Ident>> mapAlbumToSongList = Mp3Ident.getAllMusic().get(artistVe);
 						if (mapAlbumToSongList.containsKey(albumVe)) {
 							toUse.addAll(mapAlbumToSongList.get(albumVe));
 							
@@ -208,7 +208,7 @@ class respModelArt extends RespModel {
 	@Override
 	public void mp3IdentListChanged() {
 		// TODO Auto-generated method stub
-		Set<String> toAdd = Mp3Ident.arts.keySet();
+		Set<String> toAdd = Mp3Ident.getAllMusic().keySet();
 		DefaultListModelMpsAb<String> methVar = (DefaultListModelMpsAb<String>) dlmMpsAb;
 		methVar.removeAllElements();
 		methVar.addAll(toAdd);

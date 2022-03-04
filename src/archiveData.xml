@@ -34,7 +34,7 @@
 		<constructor-arg value="read Data"/>
 	</bean>
 	
-	<bean id="TextFieldBean" class="javax.swing.JTextField">
+	<bean id="TextFieldBean" class="javax.swing.JTextField" scope = "prototype">
 		<constructor-arg value="enter name"/>
 	</bean>
 	

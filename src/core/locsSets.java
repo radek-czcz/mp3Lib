@@ -201,16 +201,16 @@ public class locsSets implements Runnable {
 		public ArrayList<Mp3Ident> compareTo(locsSets inp) {
 			
 			IDifferenceOperator operator;
-			ArrayList<EqualityExtenderAbs> extArr2;
+			ArrayList<EqualityExtenderAbs> extArr =  new ArrayList<>();
 
 			int sizeBefore = this.getSongs().size();
 			int sizeAfter;
 			int sizeDeleted;
 			
-			ArrayList<EqualityExtenderAbs> extArr = new ArrayList<>();
+
 			for (Mp3Ident ident: this.getSongs()) {
 				try {
-					EqualityExtenderBaseFactory factory = AppContext.getContext().getBean(EqualityExtenderBaseFactory.class);
+					EqualityExtenderBaseFactory factory = AppContext.getContext().getBean("compFactory2", EqualityExtenderBaseFactory.class);
 					IEqualityExtenderFactory cf = factory.getFactory();
 					EqualityExtenderAbs ext = cf.createExtender(ident.getFileM());
 					
@@ -220,21 +220,44 @@ public class locsSets implements Runnable {
 				}
 			}
 			
-			extArr2 = extArr;
-			extArr2.retainAll(inp.getSongs());
-			System.out.println(extArr2);
+
+			extArr.retainAll(inp.getSongs());
+			//System.out.println(extArr2);
 			/*DifferenceOperatorBaseFactory factory2 = AppContext.getContext()
 					.getBean(DifferenceOperatorBaseFactory.class);
 			IDifferenceOperatorFactory dOF = factory2.getFactory();
-			IDifferenceOperator dO = dOF.createOperator(this.getSongs());*/
+			IDifferenceOperator dO = dOF.creat eOperator(this.getSongs());*/
 			DifferenceOperatorFactory factory2 = AppContext.getContext()
 					.getBean(DifferenceOperatorFactory.class);
 			IDifferenceOperator dO = factory2.getOperator();
-			dO.setSmthToOperate(getSongs());
+			dO.setSmthToOperate(extArr);
+			try {dO.operateOnDifference();
+			} catch (Exception e) {
+				System.out.println("canceling delete");
+			}
 			
-			dO.operateOnDifference();
 			
-			sizeAfter =  this.getSongs().size();
+			/*
+								ArrayList<EqualityExtenderAbs> extArr2 =  new ArrayList<>();
+								for (Mp3Ident ident: this.getSongs()) {
+									try {
+										EqualityExtenderBaseFactory factory = AppContext.getContext().getBean("compFactory2", EqualityExtenderBaseFactory.class);
+										IEqualityExtenderFactory cf = factory.getFactory();
+										EqualityExtenderAbs ext = cf.createExtender(ident.getFileM());
+										
+										extArr2.add(ext);
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+								extArr2.retainAll(inp.getSongs());
+			*/
+			
+			
+			
+			
+			
+			sizeAfter =  extArr.size();
 			sizeDeleted = sizeBefore - sizeAfter;
 			System.out.println(sizeDeleted + " songs have been deleted");
 			
