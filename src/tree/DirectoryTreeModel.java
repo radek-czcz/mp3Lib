@@ -21,9 +21,8 @@ public class DirectoryTreeModel extends DefaultTreeModel implements TreeExpansio
 
 	@Override
 	public void treeExpanded(TreeExpansionEvent event) {
-		// TODO Auto-generated method stub
 		TreePath 				tp;
-		DefaultMutableTreeNode 				objNode;
+		DefaultMutableTreeNode 	objNode;
 		DefaultMutableTreeNode 	firstLeaf;
 		File 					fileObj;
 		File 					fileObj2;
@@ -32,7 +31,7 @@ public class DirectoryTreeModel extends DefaultTreeModel implements TreeExpansio
 		
 		objNode = (DefaultMutableTreeNode)event.getPath().getLastPathComponent();
 		//System.out.println(objNode);
-		//System.out.println(objNode.getUserObject());
+		//System.out.println(objNode.children());
 		
 		fileObj = (File)objNode.getUserObject();
 		System.out.println(fileObj);
@@ -66,23 +65,13 @@ public class DirectoryTreeModel extends DefaultTreeModel implements TreeExpansio
 			firstLeaf = firstLeaf.getNextSibling();
 		} while (firstLeaf != null);
 		
-		firstLeaf = objNode.getFirstLeaf();
-		fileObj = (File)firstLeaf.getUserObject();
-		
-
-		
-
-
-
-		
-		//this.add(new MyTreeNode(filArr[0]));
-
+		//firstLeaf = objNode.getFirstLeaf();
+		//fileObj = (File)firstLeaf.getUserObject();
 	}
 
 	@Override
 	public void treeCollapsed(TreeExpansionEvent event) {
 		// TODO Auto-generated method stub
-
 	}
 
 }

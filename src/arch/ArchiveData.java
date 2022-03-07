@@ -1,4 +1,5 @@
 package arch;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -13,6 +14,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowListener;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
@@ -23,22 +25,31 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.RootPaneContainer;
+import javax.swing.border.Border;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.TreeWillExpandListener;
 import javax.swing.text.JTextComponent;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.RowMapper;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -107,34 +118,6 @@ public static class LocAndNameWindow {
 		
 		// maybe not needed - listeners
 		dialog.addMouseListener((MouseListener) aC.getBean("MouseListenerBean"));
-		dialog.addComponentListener(new ComponentListener() {
-			
-			@Override
-			public void componentShown(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void componentResized(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println("resized");
-				e.getSource().getClass();
-			}
-			
-			@Override
-			public void componentMoved(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void componentHidden(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		}
-		);
 		
 		jL = (JComponent)aC.getBean("JLabelBean1");
 		
@@ -164,6 +147,10 @@ public static class LocAndNameWindow {
 		//Button "read Data"
 		Component jB =  rpc.getContentPane().add((Component)aC.getBean("ButtonBean"));
 		AbstractButton aB = (AbstractButton)jB;
+		
+		/**
+		 * defines function for button "read data"
+		 */
 		aB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -200,58 +187,136 @@ public static class LocAndNameWindow {
 		// show tree button
 		Component treeButton = rpc.getContentPane().add(new JButton("show tree"));
 		AbstractButton aB2 = (AbstractButton)treeButton;
+		
+		/**
+		 * defines functioning of "show tree" button
+		 */
 		aB2.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				ArchiveData aD = new ArchiveData();
+				ArrayList<File> treeSelection= new ArrayList<>();;
 				JFrame treeFrame = new JFrame();
-				treeFrame.setLayout(new FlowLayout(FlowLayout.CENTER));
-
+				JTree tree;
+				JButton doneButton;
+				JButton addButton;
+				BorderLayout bl = new BorderLayout();
+				FlowLayout fl = new FlowLayout(FlowLayout.LEFT);
 				DefaultMutableTreeNode root;
 				DirectoryTreeModel treeModel;
-				JTree tree;
-				
 				root = new DefaultMutableTreeNode(new String("Computer"));
 				treeModel = new DirectoryTreeModel(root);
 				tree = new JTree();
+				
+				/**
+				 * defines functioning of selection in tree
+				 */
+				tree.addTreeSelectionListener(new TreeSelectionListener() {
+					@Override
+					public void valueChanged(TreeSelectionEvent e) {
+						DefaultMutableTreeNode objNode;
+						objNode = (DefaultMutableTreeNode)e.getPath().getLastPathComponent();
+						treeSelection.add((File)objNode.getUserObject());
+						System.out.println(objNode.getUserObject().toString() + " added to selection");
+					}
+				});
+				
+				/**
+				 * defines function for "add" button
+				 */
+				addButton = new JButton("Add");
+				addButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						System.out.println(treeSelection);
+						ArrayList<Mp3Ident> scannedCollection = new ArrayList<>();
+						ArrayList<Mp3Ident> scannedAll =  new ArrayList<>();
+						//ArchiveData aD;
+						aD.name = "default";
+						// scan data and add to created ArchiveData
+						try {
+						for (File runner : treeSelection) {
+							scannedCollection.addAll(Scanning.scanFoldersToCollection(runner));
+						}} catch (NullPointerException e1) {
+							treeSelection.clear();
+							return;}
+						
+						if (scannedCollection.isEmpty()) return;
+						aD.getData().getSongs().addAll(scannedCollection);
+						System.out.println(scannedCollection);
+						
+						try {
+						//newArchive.addToSetOfArchives();
+						//ArchiveTransferer aT = new ArchiveTransferer();
+						//aT.setTo(newArchive);
+						//aT.transferToArchive();
+						} catch (Exception exc) {
+							exc.printStackTrace();
+						} finally {
+							// arch.ArchiveDataInfo adi = new ArchiveDataInfo();
+							treeSelection.clear();
+						}
+					}
+				});
+				
+				doneButton = new JButton("Done");
+				doneButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						//JFrame f = new JFrame(); 
+						System.out.println(aD.getData().getSongs());
+						aD.name = JOptionPane.showInputDialog(null, "Enter Name");      
+						try {
+							aD.addToSetOfArchives();
+							ArchiveTransferer aT = new ArchiveTransferer();
+							aT.setTo(aD);
+							aT.transferToArchive();
+							} catch (Exception exc) {
+								exc.printStackTrace();
+							} finally {
+								// arch.ArchiveDataInfo adi = new ArchiveDataInfo();
+							}
+					}
+				});
+				
+				BorderLayout fl2 = new BorderLayout();
+				JPanel jp = new JPanel();
+				
+				treeFrame.setLayout(bl);
 				tree.addTreeExpansionListener(treeModel);
-				treeFrame.setVisible(true);
-
+				
 				for (File runner : File.listRoots()) {
 					root.add(new DefaultMutableTreeNode(runner));
 					DefaultMutableTreeNode tnd = (DefaultMutableTreeNode)root.getLastChild();
-					
 					for (File runner2 : runner.listFiles(new FileFilter() {
-						
 						@Override
 						public boolean accept(File pathname) {
 							// TODO Auto-generated method stub
 							return pathname.isDirectory();
-						}
-					})) {DefaultMutableTreeNode mtn = new DefaultMutableTreeNode(runner2);
-						
-					if	(mtn.getUserObject() != null)
+						}}))
+					{
+					DefaultMutableTreeNode mtn = new DefaultMutableTreeNode(runner2);
+					if	(mtn.getUserObject() != null) 
 						tnd.add(mtn);
 					}
-					
 				}
 				
 				tree.setModel(treeModel);
+				tree.setPreferredSize(new Dimension(200, 600));
+
+				Border br;
+				br = BorderFactory.createLineBorder(Color.BLACK);
 				
-				JButton addButton = new JButton("Add");
-				JButton addButton2 = new JButton("Done");
-				treeFrame.add(addButton);
-				treeFrame.add(addButton2);
+				jp.setBorder(br);
+				jp.setLayout(fl2);
+				jp.add(addButton, BorderLayout.NORTH);
+				jp.add(doneButton, BorderLayout.SOUTH);
 				
-				treeFrame.add(tree);
+				treeFrame.add(tree, BorderLayout.CENTER);
+				treeFrame.add(jp, BorderLayout.SOUTH);
 				treeFrame.pack();
 				treeFrame.setVisible(true);
-				
-				System.out.println("window shown");
-				
-				
-			
 			}}
 		
 				);

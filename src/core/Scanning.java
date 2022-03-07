@@ -100,7 +100,6 @@ public class Scanning {
 		File[] listOfFiles = inp.listFiles(myFilt);
 		// looping and creating mp3Ident objects
 		locsSets temp = new locsSets();
-		locsSets temp2;
 		for (File wrk : listOfFiles) {
 			if (wrk.isDirectory()) {
 				if (wrk.listFiles().length == 0) {
@@ -284,4 +283,60 @@ static public ArrayList<Mp3Ident> readArchiveFile(String inp) {
 	}
 	return mp3IdentColl;
 }
+
+	public static ArrayList<Mp3Ident> scanFoldersToCollection(File folder){
+		// declarations
+		Mp3Ident song;
+		ArrayList<Mp3Ident> songs = new ArrayList<>();
+		
+		/**
+		 *  filter
+		 */
+		FileFilter myFilt = new FileFilter() {
+			public boolean accept(File pathname) {
+
+				boolean tr;
+				try {
+					tr = Array.getLength(pathname.listFiles()) == 0;
+				} catch (NullPointerException exc) {
+					if (pathname.isDirectory())
+						return false;
+				}
+				if ((pathname.getName().toLowerCase().matches(".*.mp3") || pathname.isDirectory()))
+
+					return true;
+				else
+					return false;
+			}
+		};
+		
+		// listing with filter
+		File[] listOfFiles = folder.listFiles(myFilt);
+		
+		// looping and creating mp3Ident objects
+		locsSets temp = new locsSets();
+		for (File wrk : listOfFiles) {
+			if (wrk.isDirectory()) {
+				if (wrk.listFiles().length == 0) {
+					wrk.delete();
+				} else
+					try {
+					songs.addAll(scanFoldersToCollection(wrk));
+					} catch (NullPointerException e) {}
+			} else {
+				try {
+					song = new Mp3Ident(wrk);
+					songs.add(song);
+				} catch (InvalidAudioFrameException | ReadOnlyFileException 
+						| TagException | IOException
+						| CannotReadException e) {
+					e.printStackTrace();
+					continue;
+				}
+			}
+		}
+		if (songs.isEmpty())
+			return null;
+		else return songs;
+	}
 }
