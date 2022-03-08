@@ -32,6 +32,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.RootPaneContainer;
 import javax.swing.border.Border;
@@ -205,9 +206,12 @@ public static class LocAndNameWindow {
 				FlowLayout fl = new FlowLayout(FlowLayout.LEFT);
 				DefaultMutableTreeNode root;
 				DirectoryTreeModel treeModel;
+				JScrollPane ScrollPane;
 				root = new DefaultMutableTreeNode(new String("Computer"));
 				treeModel = new DirectoryTreeModel(root);
 				tree = new JTree();
+				ScrollPane = new JScrollPane(tree);
+				
 				
 				/**
 				 * defines functioning of selection in tree
@@ -313,7 +317,7 @@ public static class LocAndNameWindow {
 				jp.add(addButton, BorderLayout.NORTH);
 				jp.add(doneButton, BorderLayout.SOUTH);
 				
-				treeFrame.add(tree, BorderLayout.CENTER);
+				treeFrame.add(ScrollPane, BorderLayout.CENTER);
 				treeFrame.add(jp, BorderLayout.SOUTH);
 				treeFrame.pack();
 				treeFrame.setVisible(true);
