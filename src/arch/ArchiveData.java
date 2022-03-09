@@ -307,7 +307,7 @@ public static class LocAndNameWindow {
 				}
 				
 				tree.setModel(treeModel);
-				tree.setPreferredSize(new Dimension(200, 600));
+				//tree.setPreferredSize(new Dimension(200, 600));
 
 				Border br;
 				br = BorderFactory.createLineBorder(Color.BLACK);
