@@ -6,8 +6,6 @@ import java.io.File;
 
 import javax.swing.text.JTextComponent;
 
-import arch.ArchiveData.LocAndNameWindow;
-
 public class ArchiveButtonListener implements ActionListener {
 
 	@Override

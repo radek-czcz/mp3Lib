@@ -27,7 +27,7 @@ import textio.TextIO;
  * @author Kamila i Radek
  *
  */
-public class Mp3Ident implements Serializable {
+public class Mp3Ident implements Serializable, ISong {
 
 		protected File fileM;
 		protected String tagGen;
@@ -165,6 +165,7 @@ public class Mp3Ident implements Serializable {
 			Mp3Ident.allMusic = allMusic;
 		}
 
+		@Override
 		public String toString() {
 				StringBuffer sb = new StringBuffer();
 				sb.append("\r\n");
@@ -186,38 +187,47 @@ public class Mp3Ident implements Serializable {
 				return sb.toString();
 		}
 
+		@Override
 		public File getFileM() {
 			return fileM;
 		}
 
+		@Override
 		public String getTagGen() {
 			return tagGen;
 		}
 
+		@Override
 		public String getTagArt() {
 			return tagArt;
 		}
 
+		@Override
 		public String getTagAlb() {
 			return tagAlb;
 		}
 
+		@Override
 		public String getTagTit() {
 			return tagTit;
 		}
 
+		@Override
 		public String getTagTra() {
 			return tagTra;
 		}
 
+		@Override
 		public String getTagYea() {
 			return tagYea;
 		}
 
+		@Override
 		public String getTagCom() {
 			return tagCom;
 		}
 
+		@Override
 		public int getTagLen() {
 			return tagLen;
 		}

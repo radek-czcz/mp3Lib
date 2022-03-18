@@ -17,6 +17,7 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -41,6 +42,7 @@ import org.jaudiotagger.tag.mp4.Mp4FieldKey;
 import org.jaudiotagger.tag.reference.GenreTypes;
 import org.jaudiotagger.tag.reference.ID3V2Version;
 
+import entry.AppContext;
 import textio.TextIO;
 
 /**
@@ -79,23 +81,7 @@ public class Scanning {
 		// declarations
 		Mp3Ident song;
 		// filter
-		FileFilter myFilt = new FileFilter() {
-			public boolean accept(File pathname) {
-
-				boolean tr;
-				try {
-					tr = Array.getLength(pathname.listFiles()) == 0;
-				} catch (NullPointerException exc) {
-					if (pathname.isDirectory())
-						return false;
-				}
-				if ((pathname.getName().toLowerCase().matches(".*.mp3") || pathname.isDirectory()))
-
-					return true;
-				else
-					return false;
-			}
-		};
+		FileFilter myFilt = new MusicFilesFilter();
 		// listing with filter
 		File[] listOfFiles = inp.listFiles(myFilt);
 		// looping and creating mp3Ident objects
@@ -289,26 +275,8 @@ static public ArrayList<Mp3Ident> readArchiveFile(String inp) {
 		Mp3Ident song;
 		ArrayList<Mp3Ident> songs = new ArrayList<>();
 		
-		/**
-		 *  filter
-		 */
-		FileFilter myFilt = new FileFilter() {
-			public boolean accept(File pathname) {
-
-				boolean tr;
-				try {
-					tr = Array.getLength(pathname.listFiles()) == 0;
-				} catch (NullPointerException exc) {
-					if (pathname.isDirectory())
-						return false;
-				}
-				if ((pathname.getName().toLowerCase().matches(".*.mp3") || pathname.isDirectory()))
-
-					return true;
-				else
-					return false;
-			}
-		};
+		// filter
+		FileFilter myFilt = new MusicFilesFilter();
 		
 		// listing with filter
 		File[] listOfFiles = folder.listFiles(myFilt);
@@ -339,4 +307,5 @@ static public ArrayList<Mp3Ident> readArchiveFile(String inp) {
 			return null;
 		else return songs;
 	}
+
 }

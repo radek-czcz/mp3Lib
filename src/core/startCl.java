@@ -42,8 +42,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.sun.source.tree.TypeCastTree;
 
-import arch.ArchiveData;
 import arch.CompareToArchiveWindow;
+import arch.LocAndNameWindow;
+import arch.LocAndNameWindowRefactored;
 import entry.AppContext;
 import entry.FilesPaths;
 import entry.IButtonNameProvider;
@@ -290,7 +291,8 @@ public class startCl {
 						.getSelectedValuesList().get(0).toString()).transferToArchive();
 				break loop;
 			case "11":
-				ArchiveData.LocAndNameWindow.first();
+				AppContext.getContext().getBean(LocAndNameWindowRefactored.class).showWindow();
+				//LocAndNameWindow.showWindow();
 				break loop;
 			case "12":
 				new CompareToArchiveWindow(

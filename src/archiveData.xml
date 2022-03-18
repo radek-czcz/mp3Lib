@@ -9,6 +9,8 @@
 	
 	<bean id="tree" class="java.util.TreeSet"></bean>
 	<bean id="entryWindow" class="javax.swing.JFrame"></bean>
+	<bean id="entryWindow0" class="javax.swing.JFrame" scope = "singleton"></bean>
+	<bean id="layout0" class="java.awt.FlowLayout" scope = "singleton"></bean>
 	<bean id="layout" class="java.awt.FlowLayout">
 		<constructor-arg value="2"/>
 		<constructor-arg value="10"/>
@@ -38,4 +40,24 @@
 		<constructor-arg value="enter name"/>
 	</bean>
 	
+
+		<bean id="JLabelBean3" class="javax.swing.JLabel">
+			<constructor-arg value="name:"/>
+			<constructor-arg value="2"/>
+		</bean>
+		
+		<bean id = "treeButListener" class = "arch.TreeButtonListener" scope = "singleton"></bean>
+		
+		<bean id = "locAndNameWindowRefactored" class = "arch.LocAndNameWindowRefactored" scope = "singleton" 
+			init-method="setWindow" lazy-init="true">
+			<property name="frame" ref = "entryWindow0"></property>
+			<property name="layoutManager" ref = "layout0"></property>
+			<property name="mouseListener" ref = "MouseListenerBean" ></property>
+			<property name="label" ref = "JLabelBean3"></property>
+			<property name="textInput" ref = "TextFieldBean"></property>
+			<property name="button" ref = "ButtonBean"></property>
+			<property name="driveSelection" ref = "JLabelBean2"></property>
+			<property name="treeButtonListener" ref = "treeButListener"></property>
+		</bean>
+
 </beans>
