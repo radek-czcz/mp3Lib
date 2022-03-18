@@ -48,6 +48,12 @@
 		
 		<bean id = "treeButListener" class = "arch.TreeButtonListener" scope = "singleton"></bean>
 		
+		<bean id = "comboBoxBean" class = "arch.LocAndNameWindowRefactored"
+			factory-method="generateDrives">
+		</bean>
+		
+		
+		
 		<bean id = "locAndNameWindowRefactored" class = "arch.LocAndNameWindowRefactored" scope = "singleton" 
 			init-method="setWindow" lazy-init="true">
 			<property name="frame" ref = "entryWindow0"></property>
@@ -58,6 +64,7 @@
 			<property name="button" ref = "ButtonBean"></property>
 			<property name="driveSelection" ref = "JLabelBean2"></property>
 			<property name="treeButtonListener" ref = "treeButListener"></property>
+			<property name="drives" ref = "comboBoxBean"></property>
 		</bean>
 
 </beans>

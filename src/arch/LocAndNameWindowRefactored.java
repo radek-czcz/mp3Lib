@@ -52,6 +52,8 @@ public class LocAndNameWindowRefactored {
 	private Component driveSelection;
 	private Component button;
 	private ActionListener treeButtonListener;
+	private Component driveSelect;
+	private static File[] drives;
 	
 	private String name;
 	private File path;
@@ -96,8 +98,10 @@ public class LocAndNameWindowRefactored {
 		c2.setPreferredSize(new Dimension(40, 20));
 		
 		//JComboBox drive's selection
-		File[] drives = File.listRoots();
-		Component c3 = rpc.getContentPane().add(new JComboBox(drives));
+		drives = File.listRoots();
+		Component cbc = (Component)AppContext.getContext().getBean("comboBoxBean", drives);
+		Component c3 = rpc.getContentPane().add(cbc);
+		//Component c3 = rpc.getContentPane().add(new JComboBox(drives));
 		//Component c3 = rpc.getContentPane().add((Component)aC.getBean("TextFieldBean"));
 		c3.setPreferredSize(new Dimension(100, 20));
 		
@@ -167,6 +171,11 @@ public class LocAndNameWindowRefactored {
 		return path;
 	}
 	
+	static Component generateDrives() {
+		drives = File.listRoots();
+		return new JComboBox(drives);
+	}
+	
 	public void setFrame(Component frame) {
 		this.frame = frame;
 	}
@@ -205,5 +214,9 @@ public class LocAndNameWindowRefactored {
 	
 	public void setTreeButtonListener(ActionListener treeButtonListener) {
 		this.treeButtonListener = treeButtonListener;
+	}
+
+	public void setDrives(File[] drives) {
+		this.drives = drives;
 	}
 }
