@@ -62,7 +62,7 @@ public class LocAndNameWindowRefactored {
 		
 	}
 	
-	private void setWindow() {
+	private void prepareWindow() {
 		
 		ApplicationContext aC = AppContext.getContext();
 		

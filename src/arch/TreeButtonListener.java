@@ -2,6 +2,7 @@ package arch;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,22 +30,70 @@ public class TreeButtonListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// data
 		JTree tree;
 		JButton doneButton;
 		JButton addButton;
 		DefaultMutableTreeNode root;
 		DirectoryTreeModel treeModel;
-		JScrollPane ScrollPane;
 		ArchiveData aD = new ArchiveData();
 		ArrayList<File> treeSelection= new ArrayList<>();
-		JFrame treeFrame = new JFrame();
-		BorderLayout bl = new BorderLayout();
-		FlowLayout fl = new FlowLayout(FlowLayout.LEFT);
 		root = new DefaultMutableTreeNode(new String("Computer"));
 		treeModel = new DirectoryTreeModel(root);
 		tree = new JTree();
-		ScrollPane = new JScrollPane(tree);
+		ArrayList<Component> cmps = new ArrayList<Component>();
+		addButton = new JButton("Add");
+		doneButton = new JButton("Done");
+		cmps.add(addButton);
+		cmps.add(doneButton);
 		
+		tree.addTreeExpansionListener(treeModel);
+		
+		// window
+		JScrollPane ScrollPane;
+		JFrame treeFrame = new JFrame();
+		BorderLayout bl = new BorderLayout();
+		FlowLayout fl = new FlowLayout(FlowLayout.LEFT);
+		ScrollPane = new JScrollPane(tree);
+		BorderLayout fl2 = new BorderLayout();
+		JPanel jp = new JPanel();
+		Border br;
+		br = BorderFactory.createLineBorder(Color.BLACK);
+		
+		treeFrame.setLayout(bl);
+		jp.setBorder(br);
+		jp.setLayout(fl2);
+		for (Component cmp : cmps) {jp.add(cmp);}
+
+		
+		for (File runner : File.listRoots()) {
+			root.add(new DefaultMutableTreeNode(runner));
+			DefaultMutableTreeNode tnd = (DefaultMutableTreeNode)root.getLastChild();
+			for (File runner2 : runner.listFiles(new FileFilter() {
+				@Override
+				public boolean accept(File pathname) {
+					// TODO Auto-generated method stub
+					return pathname.isDirectory();
+				}}))
+			{
+			DefaultMutableTreeNode mtn = new DefaultMutableTreeNode(runner2);
+			if	(mtn.getUserObject() != null) 
+				tnd.add(mtn);
+			}
+		}
+		
+		tree.setModel(treeModel);
+		//tree.setPreferredSize(new Dimension(200, 600));
+
+
+
+		jp.add(addButton, BorderLayout.NORTH);
+		jp.add(doneButton, BorderLayout.SOUTH);
+		
+		treeFrame.add(ScrollPane, BorderLayout.CENTER);
+		treeFrame.add(jp, BorderLayout.SOUTH);
+		treeFrame.pack();
+		treeFrame.setVisible(true);
 		
 		/**
 		 * defines functioning of selection in tree
@@ -62,7 +111,6 @@ public class TreeButtonListener implements ActionListener {
 		/**
 		 * defines function for "add" button
 		 */
-		addButton = new JButton("Add");
 		addButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -96,7 +144,6 @@ public class TreeButtonListener implements ActionListener {
 				}
 			}
 		});
-		doneButton = new JButton("Done");
 		
 		/**
 		 * defines function for "done" button
@@ -122,43 +169,6 @@ public class TreeButtonListener implements ActionListener {
 			}
 		});
 		
-		BorderLayout fl2 = new BorderLayout();
-		JPanel jp = new JPanel();
-		
-		treeFrame.setLayout(bl);
-		tree.addTreeExpansionListener(treeModel);
-		
-		for (File runner : File.listRoots()) {
-			root.add(new DefaultMutableTreeNode(runner));
-			DefaultMutableTreeNode tnd = (DefaultMutableTreeNode)root.getLastChild();
-			for (File runner2 : runner.listFiles(new FileFilter() {
-				@Override
-				public boolean accept(File pathname) {
-					// TODO Auto-generated method stub
-					return pathname.isDirectory();
-				}}))
-			{
-			DefaultMutableTreeNode mtn = new DefaultMutableTreeNode(runner2);
-			if	(mtn.getUserObject() != null) 
-				tnd.add(mtn);
-			}
-		}
-		
-		tree.setModel(treeModel);
-		//tree.setPreferredSize(new Dimension(200, 600));
-
-		Border br;
-		br = BorderFactory.createLineBorder(Color.BLACK);
-		
-		jp.setBorder(br);
-		jp.setLayout(fl2);
-		jp.add(addButton, BorderLayout.NORTH);
-		jp.add(doneButton, BorderLayout.SOUTH);
-		
-		treeFrame.add(ScrollPane, BorderLayout.CENTER);
-		treeFrame.add(jp, BorderLayout.SOUTH);
-		treeFrame.pack();
-		treeFrame.setVisible(true);
 	}
 
 }
