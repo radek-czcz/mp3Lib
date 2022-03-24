@@ -154,10 +154,9 @@ public class LocAndNameWindowRefactored {
 		 */
 		aB2.addActionListener(treeButtonListener);
 		
-		
 		dialog.setSize(200, 200);
-		
 	}
+	
 	
 	public void showWindow() {
 		frame.setVisible(true);
@@ -217,7 +216,7 @@ public class LocAndNameWindowRefactored {
 		this.treeButtonListener = treeButtonListener;
 	}
 
-	public void setDrives(Component drives) {
-		this.drives = drives;
+	public static void setDrives(Component drives) {
+		drives = drives;
 	}
 }
