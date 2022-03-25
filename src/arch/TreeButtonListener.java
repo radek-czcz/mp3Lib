@@ -27,9 +27,14 @@ import core.Scanning;
 import tree.DirectoryTreeModel;
 
 public class TreeButtonListener implements ActionListener {
+	
+	AddingWindowAbstract wdw;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		ArrayList<Component> cmps;
+		
 		// data
 		JTree tree;
 		JButton doneButton;
@@ -41,29 +46,18 @@ public class TreeButtonListener implements ActionListener {
 		root = new DefaultMutableTreeNode(new String("Computer"));
 		treeModel = new DirectoryTreeModel(root);
 		tree = new JTree();
-		ArrayList<Component> cmps = new ArrayList<Component>();
+		cmps = new ArrayList<Component>();
 		addButton = new JButton("Add");
 		doneButton = new JButton("Done");
 		cmps.add(addButton);
 		cmps.add(doneButton);
 		
+		
+
+		
 		tree.addTreeExpansionListener(treeModel);
 		
 		// window
-		JScrollPane ScrollPane;
-		JFrame treeFrame = new JFrame();
-		BorderLayout bl = new BorderLayout();
-		FlowLayout fl = new FlowLayout(FlowLayout.LEFT);
-		ScrollPane = new JScrollPane(tree);
-		BorderLayout fl2 = new BorderLayout();
-		JPanel jp = new JPanel();
-		Border br;
-		br = BorderFactory.createLineBorder(Color.BLACK);
-		
-		treeFrame.setLayout(bl);
-		jp.setBorder(br);
-		jp.setLayout(fl2);
-		for (Component cmp : cmps) {jp.add(cmp);}
 
 		
 		for (File runner : File.listRoots()) {
@@ -85,15 +79,8 @@ public class TreeButtonListener implements ActionListener {
 		tree.setModel(treeModel);
 		//tree.setPreferredSize(new Dimension(200, 600));
 
-
-
-		jp.add(addButton, BorderLayout.NORTH);
-		jp.add(doneButton, BorderLayout.SOUTH);
 		
-		treeFrame.add(ScrollPane, BorderLayout.CENTER);
-		treeFrame.add(jp, BorderLayout.SOUTH);
-		treeFrame.pack();
-		treeFrame.setVisible(true);
+
 		
 		/**
 		 * defines functioning of selection in tree
@@ -168,7 +155,14 @@ public class TreeButtonListener implements ActionListener {
 				} else System.out.println("empty library");
 			}
 		});
+		cmps.add(tree);
+		wdw.setComponents(cmps);
+		wdw.prepareAndShow();
 		
+	}
+
+	public void setWdw(AddingWindowAbstract wdw) {
+		this.wdw = wdw;
 	}
 
 }
