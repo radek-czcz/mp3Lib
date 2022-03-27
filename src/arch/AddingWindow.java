@@ -31,7 +31,7 @@ public class AddingWindow extends AddingWindowAbstract {
 		BorderLayout bl = new BorderLayout();
 		FlowLayout fl = new FlowLayout(FlowLayout.LEFT);
 		scrollPane = new JScrollPane(scrollableContent);
-		BorderLayout fl2 = new BorderLayout();
+		FlowLayout fl2 = new FlowLayout();
 		JPanel jp = new JPanel();
 		Border br;
 		br = BorderFactory.createLineBorder(Color.BLACK);
@@ -46,7 +46,7 @@ public class AddingWindow extends AddingWindowAbstract {
 		while (iter.hasNext()){
 			Component iterCmp = iter.next();
 			try {
-				jp.add((AbstractButton)iterCmp, BorderLayout.LINE_END);
+				jp.add((AbstractButton)iterCmp);
 			} catch (ClassCastException e) {
 				System.out.println("cast error");
 			}
