@@ -143,7 +143,7 @@ public class TreeButtonListener implements ActionListener {
 				if (!aD.getData().getSongs().isEmpty()) {
 				aD.name = JOptionPane.showInputDialog(null, "Enter Name");      
 				try {
-					aD.addToSetOfArchives();
+					//aD.addToSetOfArchives();
 					ArchiveTransferer aT = new ArchiveTransferer();
 					aT.setTo(aD);
 					aT.transferToArchive();
