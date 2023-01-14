@@ -20,7 +20,10 @@ import tree.DirectoryTreeModel;
 public class testFrame {
 	
 	public static void main(String[] args) {
-		JFrame treeFrame = new JFrame();
+		
+		
+		
+		/*JFrame treeFrame = new JFrame();
 		JTree tree;
 		BorderLayout bl = new BorderLayout();
 		FlowLayout fl = new FlowLayout(FlowLayout.LEFT);
@@ -67,6 +70,6 @@ public class testFrame {
 		treeFrame.add(tree, BorderLayout.CENTER);
 		treeFrame.add(jp, BorderLayout.SOUTH);
 		treeFrame.pack();
-		treeFrame.setVisible(true);
+		treeFrame.setVisible(true);*/
 	}
 }

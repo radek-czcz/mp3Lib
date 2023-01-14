@@ -295,8 +295,10 @@ public class startCl {
 				//LocAndNameWindow.showWindow();
 				break loop;
 			case "12":
+				if (RespModel.jl1.getSelectedValuesList().size() != 0)
 				new CompareToArchiveWindow(
 						locsSets.getSetUnit(RespModel.jl1.getSelectedValuesList().get(0).toString()));
+				else System.out.println("no selection made");
 			}
 		}
 	}

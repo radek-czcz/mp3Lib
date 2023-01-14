@@ -3,6 +3,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class ArchiveData implements Comparable<ArchiveData>, TransferedObject, S
 	
 	static void readListOfArchiveData() {
 		File archiveDir = new File("archivefiles");
-		for (File runner: archiveDir.listFiles()){
+		for (File runner: archiveDir.listFiles(new ArchiveFileFilter())){
 			ArchiveData newAd = new ArchiveData();
 			newAd.name = runner.getName();
 			setOfArchives.add(newAd);
