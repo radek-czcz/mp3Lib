@@ -8,7 +8,10 @@
 	<bean
 		id="paths" class="entry.FilesPaths">
 		<property
-			name = "pathDriveLetter" value="d">
+			name = "pathDriveLetter" value="c">
+		</property>
+		<property 
+			name="path" value = "\\Users\\Antoni Czyżowicz\\eclipse-workspace\\mp3lib">	
 		</property>
 	</bean>
 	

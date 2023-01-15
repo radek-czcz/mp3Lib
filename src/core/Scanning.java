@@ -60,7 +60,7 @@ public class Scanning {
 	 */
 	static void scanFoldersToDataFile() {
 		File locations;
-		TextIO.readFile(startCl.fPaths.getPathDriveLetter() + ":\\locs.dat");
+		TextIO.readFile(startCl.fPaths.getPathDriveLetter() + ":" + startCl.fPaths.getPath() + "\\locs.dat");
 		String line;
 
 		while ( ! TextIO.eof() ) {
@@ -130,7 +130,7 @@ public class Scanning {
 		// TODO scanning CD to data file, anchor point.
 		//JFileChooser jfc = new JFileChooser();
 		//jfc.showSaveDialog(null);
-		try (FileOutputStream fos = new FileOutputStream(startCl.fPaths.getPathDriveLetter() + ":\\arch31_g.dat", true);
+		try (FileOutputStream fos = new FileOutputStream(startCl.fPaths.getPathDriveLetter() + ":" + startCl.fPaths.getPath() + "\\arch31_g.dat", true);
 			ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 				oos.writeObject(inp);
 				oos.close();
@@ -178,7 +178,7 @@ public class Scanning {
 	 */
 	static void readDataFile() {
 
-		File source = new File(startCl.fPaths.getPathDriveLetter() + ":\\arch31_g.dat");
+		File source = new File(startCl.fPaths.getPathDriveLetter() + ":" + startCl.fPaths.getPath() + "\\arch31_g.dat");
 		FileInputStream fis = null;
 		Mp3Ident buff;
 

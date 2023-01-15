@@ -22,6 +22,9 @@ public class DifferenceOperator1 implements IDifferenceOperator {
 		// TODO Auto-generated constructor stub
 	}
 	
+	/*
+	 * sums up the sizes of files in collection
+	 */
 	@Override
 	public void operateOnDifference() {
 		// TODO Auto-generated method stub

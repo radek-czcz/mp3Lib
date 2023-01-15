@@ -5,8 +5,6 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-
-	<bean id="compFactory" abstract="true"></bean>
 	
 	<!--
 	<bean id="compFactory" class="comparers.EqualityExtenderBaseFactory">
@@ -14,40 +12,41 @@
 			<ref bean="concComp3" />
 		</property>
 	</bean> -->
-
-	<bean id = "concComp1" class = "comparers.EqualityExtenderFactory1" ></bean>
-	<bean id = "concComp2" class = "comparers.EqualityExtenderFactory2" ></bean>
-	<bean id = "concComp3" class = "comparers.EqualityExtenderFactory3" ></bean>
-	
 	<!--	<bean id = "DiffOp" class = "comparers.DifferenceOperatorBaseFactory">
 		<property name = "factory">
 			<ref bean = "ConcDiffOp1"/>
 		</property>
 	</bean>  -->
-
 	
+		
+	<!-- <bean id ="compFactory1" class = "comparers.EqualityExtenderBaseFactory" parent = "compFactory">
+		<property name="factory">
+			<ref bean="concComp1" />
+		</property>
+   </bean> -->
+
 	<bean id = "ConcDiffOp1" class = "comparers.DifferenceOperatorFactory1"></bean>
 	
 	<bean id = "DiOp" class = "comparers.DifferenceOperatorFactory">
 		<property name="operator"> 
-			<ref bean = "DiOp2"/>
+			<ref bean = "DiOp1"/>
 		</property>
 	</bean>
 	
-	<!-- ONLY SHOWING RESULTS - SIZE AND NUMBER OF FILES -->
-	<bean name = "DiOp1" class = "comparers.DifferenceOperator1"></bean>
-	
-	<bean id ="compFactory1" class = "comparers.EqualityExtenderBaseFactory" parent = "compFactory">
-		<property name="factory">
-			<ref bean="concComp1" />
-		</property>
-   </bean>
+	<bean id="compFactory" abstract="true"></bean>
+      
+	<bean id = "concComp1" class = "comparers.EqualityExtenderFactory1" ></bean>
+	<bean id = "concComp2" class = "comparers.EqualityExtenderFactory2" ></bean>
+	<bean id = "concComp3" class = "comparers.EqualityExtenderFactory3" ></bean>
    
-   	<bean id ="compFactory2" class = "comparers.EqualityExtenderBaseFactory" parent = "compFactory">
+   <bean id ="comparerFactory" class = "comparers.EqualityExtenderBaseFactory" parent = "compFactory">
 		<property name="factory">
 			<ref bean="concComp3" />
 		</property>
    </bean>
+   
+	<!-- ONLY SHOWING RESULTS - SIZE AND NUMBER OF FILES -->
+	<bean name = "DiOp1" class = "comparers.DifferenceOperator1"></bean>
    
    <!-- DELETING FILES -->
    	<bean name = "DiOp2" class = "comparers.DifferenceOperator2"></bean>

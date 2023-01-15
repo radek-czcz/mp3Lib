@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-<import resource="config3.xml"/>
+<import resource="config.xml"/>
 <import resource="buttons.xml"/>
 <import resource="archiveData.xml"/>
 <import resource="comparersConf.xml"/>

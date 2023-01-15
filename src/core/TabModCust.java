@@ -98,7 +98,7 @@ public class TabModCust {
 			public void windowClosing(WindowEvent e) {
 				// TODO Auto-generated method stub
 				Stream<String> str;
-				File dirDataFile = new File(startCl.fPaths.getPathDriveLetter() + ":\\locs.dat");
+				File dirDataFile = new File(startCl.fPaths.getPathDriveLetter() + startCl.fPaths.getPath() + ":\\locs.dat");
 				FileWriter fW;
 				try {
 					fW = new FileWriter(dirDataFile);

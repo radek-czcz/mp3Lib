@@ -210,7 +210,7 @@ public class locsSets implements Runnable {
 
 			for (Mp3Ident ident: this.getSongs()) {
 				try {
-					EqualityExtenderBaseFactory factory = AppContext.getContext().getBean("compFactory2", EqualityExtenderBaseFactory.class);
+					EqualityExtenderBaseFactory factory = AppContext.getContext().getBean("comparerFactory", EqualityExtenderBaseFactory.class);
 					IEqualityExtenderFactory cf = factory.getFactory();
 					EqualityExtenderAbs ext = cf.createExtender(ident.getFileM());
 					
@@ -259,7 +259,7 @@ public class locsSets implements Runnable {
 			
 			sizeAfter =  extArr.size();
 			sizeDeleted = sizeBefore - sizeAfter;
-			System.out.println(sizeDeleted + " songs have been deleted");
+			System.out.println(sizeDeleted + " out of " + sizeBefore + " songs have been deleted");
 			
 			return inp.getSongs();
 		}
