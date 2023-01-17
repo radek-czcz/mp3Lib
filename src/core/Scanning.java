@@ -156,7 +156,7 @@ public class Scanning {
 		try {
 			ois = new ObjectInputStream(fisInp);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			if (e.getClass() == EOFException.class) {
 				System.out.println("End of file reached");
 				throw (EOFException) e;
@@ -177,7 +177,6 @@ public class Scanning {
 	 * Used to read mp3Idents from data file. Reads whole data file to mp3Ident array
 	 */
 	static void readDataFile() {
-
 		File source = new File(startCl.fPaths.getPathDriveLetter() + ":" + startCl.fPaths.getPath() + "\\arch31_g.dat");
 		FileInputStream fis = null;
 		Mp3Ident buff;
@@ -201,7 +200,7 @@ public class Scanning {
 					System.out.println(buff.fileM.getPath() + " not added. Path belongs not to locsSets");
 				}
 			} catch (EOFException w) {
-				w.printStackTrace();
+				//w.printStackTrace();
 				break;
 			}
 		}

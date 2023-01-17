@@ -18,9 +18,7 @@ public class DifferenceOperator1 implements IDifferenceOperator {
 		toOperate = inpCollection;
 	}
 	
-	public DifferenceOperator1() {
-		// TODO Auto-generated constructor stub
-	}
+	public DifferenceOperator1() {}
 	
 	/*
 	 * sums up the sizes of files in collection

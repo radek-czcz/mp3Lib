@@ -85,7 +85,7 @@ public class locsSets implements Runnable {
 		 */
 		public static void setLocsSets() {
 			synchronized (allSets) {
-				TextIO.readFile(startCl.fPaths.getPathDriveLetter() + ":\\locs.dat");
+				TextIO.readFile("locs.dat");
 				String line;
 		
 				while ( ! TextIO.eof() ) {
@@ -102,7 +102,7 @@ public class locsSets implements Runnable {
 		 */
 		static locsSets getSetUnit(String keyS) throws NullPointerException{
 				
-				MyPathString str = new MyPathString(keyS);
+ 				MyPathString str = new MyPathString(keyS);
 				Iterator<MyPathString> overKeys = allSets.keySet().iterator();
 				while (overKeys.hasNext()) {
 				MyPathString runner = overKeys.next();
@@ -180,7 +180,7 @@ public class locsSets implements Runnable {
 			if (checkedPath == null) {
 				checkedPath = "archive.dat";
 			} else {
-				checkedPath = startCl.fPaths.getPath() + "archive.dat";
+				checkedPath = /*startCl.fPaths.getPathDriveLetter() + ":" + startCl.fPaths.getPath() + "\\\\" +*/ "archive.dat";
 			}
 			try (
 					FileOutputStream fos = new FileOutputStream(checkedPath, true);
