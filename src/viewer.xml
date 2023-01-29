@@ -8,6 +8,13 @@
 <bean id="panelBean" class="javax.swing.JPanel">
 </bean>
 
-<bean id = "ViewerContentBean" class = "javax.swing.JTree"></bean>
+<bean id = "coloredJTreeBean" class = "viewer.ColoredJTree">
+	<property name="cellRenderer">
+		<ref bean = "myTreeCellRendererBean"/>
+	</property>
+</bean>
+
+<bean id = "myTreeCellRendererBean" class ="viewer.MyTreeCellRenderer">
+</bean>
 
 </beans>
