@@ -29,10 +29,14 @@ public class ViewerWindow {
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("ALL");
 		tree.setModel(new DefaultTreeModel(root));
 		
-		root.add(new DefaultMutableTreeNode("radek"));
+		//String[] row = new String[] {"radek", "abc"};
+		
+		//root.add(new DefaultMutableTreeNode(row));
 		
 		window.setSize(800, 500);
 		window.setVisible(true);
+		
+		root.add(new DefaultMutableTreeNode("ALL down"));
 
 	}
 	
