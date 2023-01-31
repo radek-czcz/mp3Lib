@@ -18,25 +18,28 @@ public class ViewerWindow {
 	public ViewerWindow() {
 		this.window = new JFrame();
 		this.panel = AppContext.getContext().getBean("panelBean",javax.swing.JComponent.class);
+		window.add(panel);
 		viewedContentComponent = AppContext.getContext().getBean("coloredJTreeBean", javax.swing.JComponent.class);
 		this.panel.add(viewedContentComponent);
 		
-		window.add(panel);
 		ColoredJTree tree = (ColoredJTree)viewedContentComponent;
 		TreeCellRenderer treeRenderer = tree.getCellRenderer();
 		
-		//panel.add(tree);
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("ALL");
-		tree.setModel(new DefaultTreeModel(root));
+		panel.add(tree);
+		DefaultMutableTreeNode root1 = (DefaultMutableTreeNode)tree.getModel().getRoot();
 		
-		//String[] row = new String[] {"radek", "abc"};
 		
-		//root.add(new DefaultMutableTreeNode(row));
+		//DefaultMutableTreeNode root = new DefaultMutableTreeNode("ALL");
+		//tree.setModel(new DefaultTreeModel(root));
+		
+		String[] row = new String[] {"radek", "abc"};
+		
+		root1.add(new DefaultMutableTreeNode(row));
 		
 		window.setSize(800, 500);
 		window.setVisible(true);
 		
-		root.add(new DefaultMutableTreeNode("ALL down"));
+		root1.add(new DefaultMutableTreeNode("ALL down"));
 
 	}
 	
