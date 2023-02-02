@@ -18,11 +18,6 @@ public class MyTreeCellRenderer extends DefaultTreeCellRenderer {
 		setForeground(new Color(220, 150 ,30));
 		setFont(new Font(getFont().getName(), Font.BOLD, 25));
 		
-		
-		
 		return cmp;
 	}
-	
-	
-
 }
