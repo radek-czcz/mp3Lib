@@ -17,4 +17,26 @@
 <bean id = "myTreeCellRendererBean" class ="viewer.MyTreeCellRenderer">
 </bean>
 
+<bean id = "windowBean" class = "javax.swing.JFrame" scope="prototype"></bean>
+
+<bean id="panelBean2" class="javax.swing.JPanel" scope="prototype"></bean>
+
+<bean id="treeBean" class="viewer.ColoredJTree" scope="prototype"></bean>
+
+<bean id = "viewerBean" class = "viewer.ViewerWindow" scope="prototype">
+	<property name="window" ref="windowBean"></property>
+	<property name="panel" ref="panelBean2"></property>
+	<property name="viewedContentComponent" ref="coloredJTreeBean"></property>
+</bean>
+
+<bean id = "DataProviderBean" class="viewer.DataProvider1" scope="prototype">
+	<property name="window" ref="viewerBean"></property>
+</bean>
+
+<bean id = "TesterBean" class = "viewer.tester">
+	<property name="window" ref = "viewerBean"></property>
+	<property name="provider" ref="DataProviderBean"></property>
+</bean>
+
+
 </beans>
