@@ -15,7 +15,6 @@ public class ColoredJTree extends JTree {
 	
 	@Override
 	public void setCellRenderer(TreeCellRenderer x) {
-		// TODO Auto-generated method stub
 		super.setCellRenderer(x);
 	}
 	

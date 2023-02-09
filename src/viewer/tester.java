@@ -14,9 +14,7 @@ public class tester {
 	}
 	public void work() {
 		
-		
 		window.createWindow();
-		
 		provider.setWindow(window);
 		provider.sendDataToModel("hubert czy¿owicz");
 		provider.sendDataToModel("bartek czy¿owicz");
