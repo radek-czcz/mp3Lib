@@ -17,12 +17,14 @@ import javax.swing.tree.TreeCellRenderer;
 
 public class MyTreeCellRenderer extends JPanel implements TreeCellRenderer {
 	
+	TagsValuesCompiler TagCompiler;
+	
 	@Override
 	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded,
 			boolean leaf, int row, boolean hasFocus) {
 		
 		this.removeAll();
-		this.add(new JLabel(value.toString()));
+		this.add(new JLabel(TagCompiler.compileTagsValues()));
 		//al.add(new JLabel("radek"));
 		//al.add(new JLabel("bartek"));
         //String         stringValue = tree.convertValueToText(value, selected,
