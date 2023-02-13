@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -23,8 +24,24 @@ public class MyTreeCellRenderer extends JPanel implements TreeCellRenderer {
 	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded,
 			boolean leaf, int row, boolean hasFocus) {
 		
+		String iter;
 		this.removeAll();
-		this.add(new JLabel(TagCompiler.compileTagsValues()));
+		Iterator<String> runner = TagCompiler.compileTagsValues().iterator();
+		
+		while (runner.hasNext()) {
+			iter = runner.next();
+			
+			if (iter == "bartek") {
+				this.add(new JLabel(iter) {
+				@Override
+				public void setForeground(Color fg) {
+					// TODO Auto-generated method stub
+					super.setForeground(new Color(100, 200, 50));
+			}
+		});} else {
+			this.add(new JLabel(iter));
+			}
+		}
 		//al.add(new JLabel("radek"));
 		//al.add(new JLabel("bartek"));
         //String         stringValue = tree.convertValueToText(value, selected,
@@ -43,6 +60,10 @@ public class MyTreeCellRenderer extends JPanel implements TreeCellRenderer {
 		return this;
 	}
 	
+	public void setTagCompiler(TagsValuesCompiler tagCompiler) {
+		TagCompiler = tagCompiler;
+	}
+
 	public MyTreeCellRenderer() {}
 
 }
