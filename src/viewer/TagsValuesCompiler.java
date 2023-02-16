@@ -1,9 +1,9 @@
 package viewer;
 
-import java.util.Collection;
+import javax.swing.JPanel;
 
 public interface TagsValuesCompiler {
 	
-	Collection<String> compileTagsValues();
+	JPanel compileTagsValues(Object inp);
 
 }

@@ -2,8 +2,10 @@ package viewer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import core.ISong;
 
@@ -17,10 +19,11 @@ public class TagsValuesCompiler1 implements TagsValuesCompiler {
 	}
 
 	@Override
-	public List<String> compileTagsValues() {
+	public JPanel compileTagsValues(Object inp) {
 		
-		List<String> returned;
-		returned = (List<String>)Arrays.asList(values);
+		JPanel returned;
+		returned = new JPanel();
+		returned.add(new JLabel(Arrays.toString(values)));
 		return returned;
 	}
 

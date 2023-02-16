@@ -24,8 +24,10 @@ public class MyTreeCellRenderer extends JPanel implements TreeCellRenderer {
 	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded,
 			boolean leaf, int row, boolean hasFocus) {
 		
-		String iter;
 		this.removeAll();
+		this.add(TagCompiler.compileTagsValues(null));
+		/*String iter;
+		
 		Iterator<String> runner = TagCompiler.compileTagsValues().iterator();
 		
 		while (runner.hasNext()) {
