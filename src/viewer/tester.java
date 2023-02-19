@@ -18,7 +18,7 @@ public class tester {
 		provider.setWindow(window);
 		provider.sendDataToModel("hubert czy¿owicz");
 		provider.sendDataToModel("bartek czy¿owicz");
-		
+		provider.sendDataToModel("radek czy¿owicz");
 	}
 	
 	public static void main(String[] args) {

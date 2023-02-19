@@ -21,10 +21,27 @@ public class ViewerWindow implements IViewerWindow {
 	public ViewerWindow() {
 	}
 	
+	@Override
+	public TreeModel getDataReceiver() {
+		return viewedContentComponent.getModel();
+	}
+
+	public void setWindow(Container window) {
+		this.window = window;
+	}
+
+	public void setPanel(Container panel) {
+		this.panel = panel;
+	}
+
+	public void setViewedContentComponent(ColoredJTree viewedContentComponent) {
+		this.viewedContentComponent = viewedContentComponent;
+	}
+
 	public void createWindow(){
 		this.window.add(panel);
 		this.panel.add(viewedContentComponent);	
-
+	
 		//TreeCellRenderer treeRenderer = tree.getCellRenderer();	
 		//panel.add(tree);
 		//DefaultMutableTreeNode root1 = (DefaultMutableTreeNode)tree.getModel().getRoot();
@@ -42,26 +59,9 @@ public class ViewerWindow implements IViewerWindow {
 		
 		//root1.add(new DefaultMutableTreeNode("ALL down"));
 	}
-	
+
 	public static void main(String[] args) {
 		ViewerWindow myWindow = AppContext.getContext().getBean("viewerBean", ViewerWindow.class);
 		myWindow.createWindow();
-	}
-
-	public void setWindow(Container window) {
-		this.window = window;
-	}
-
-	public void setPanel(Container panel) {
-		this.panel = panel;
-	}
-
-	public void setViewedContentComponent(ColoredJTree viewedContentComponent) {
-		this.viewedContentComponent = viewedContentComponent;
-	}
-
-	@Override
-	public TreeModel getDataReceiver() {
-		return viewedContentComponent.getModel();
 	}
 }

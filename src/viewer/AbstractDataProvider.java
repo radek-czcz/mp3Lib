@@ -2,9 +2,9 @@ package viewer;
 
 public abstract class AbstractDataProvider {
 	
-	IViewerWindow window;
+	protected IViewerWindow window;
 
-	abstract void sendDataToModel(Object song);
+	abstract protected void sendDataToModel(Object song);
 
 	public AbstractDataProvider() {
 	}

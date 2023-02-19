@@ -25,7 +25,7 @@ public class MyTreeCellRenderer extends JPanel implements TreeCellRenderer {
 			boolean leaf, int row, boolean hasFocus) {
 		
 		this.removeAll();
-		this.add(TagCompiler.compileTagsValues(null));
+		this.add(TagCompiler.compileTagsValues(value));
 		/*String iter;
 		
 		Iterator<String> runner = TagCompiler.compileTagsValues().iterator();

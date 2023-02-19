@@ -37,7 +37,7 @@
 	<property name="viewedContentComponent" ref="coloredJTreeBean"></property>
 </bean>
 
-<bean id = "DataProviderBean" class="viewer.DataProvider1" scope="prototype">
+<bean id = "DataProviderBean" class="viewer.dataexchange.DataProvider1" scope="prototype">
 	<property name="window" ref="viewerBean"></property>
 </bean>
 
