@@ -31,7 +31,7 @@
 <bean id="panelBean2" class="javax.swing.JPanel" scope="prototype"></bean>
 <bean id="panelBean3" class="viewer.MyJPanel1" scope="prototype"></bean>
 
-<bean id = "viewerBean" class = "viewer.ViewerWindow" scope="prototype">
+<bean id = "viewerBean" class = "viewer.ViewerWindow1" scope="prototype">
 	<property name="window" ref="windowBean"></property>
 	<property name="panel" ref="panelBean3"></property>
 	<property name="viewedContentComponent" ref="coloredJTreeBean"></property>
@@ -44,6 +44,15 @@
 <bean id = "TesterBean" class = "viewer.tester">
 	<property name="window" ref = "viewerBean"></property>
 	<property name="provider" ref="DataProviderBean"></property>
+</bean>
+
+<bean id = "DataProviderBean2" class="viewer.dataexchange.DataProvider2" scope="prototype">
+	<property name="window" ref="viewerBean"></property>
+</bean>
+
+<bean id = "ViewerAssemblerBean" class = "viewer.ViewerAssembler">
+	<property name="window" ref = "viewerBean"></property>
+	<property name="provider" ref="DataProviderBean2"></property>
 </bean>
 
 </beans>

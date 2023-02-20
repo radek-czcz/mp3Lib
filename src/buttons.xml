@@ -23,6 +23,7 @@
 	            <value>move to Archive</value>
 	            <value>scan to Archive</value>
 	            <value>compare to archive</value>
+	            <value>viewer</value>
         	</array>
 		</property>
 	</bean>

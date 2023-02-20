@@ -26,39 +26,6 @@ public class MyTreeCellRenderer extends JPanel implements TreeCellRenderer {
 		
 		this.removeAll();
 		this.add(TagCompiler.compileTagsValues(value));
-		/*String iter;
-		
-		Iterator<String> runner = TagCompiler.compileTagsValues().iterator();
-		
-		while (runner.hasNext()) {
-			iter = runner.next();
-			
-			if (iter == "bartek") {
-				this.add(new JLabel(iter) {
-				@Override
-				public void setForeground(Color fg) {
-					// TODO Auto-generated method stub
-					super.setForeground(new Color(100, 200, 50));
-			}
-		});} else {
-			this.add(new JLabel(iter));
-			}
-		}
-		//al.add(new JLabel("radek"));
-		//al.add(new JLabel("bartek"));
-        //String         stringValue = tree.convertValueToText(value, selected,
-                //expanded, leaf, row, hasFocus);
-
-		//this.tree = tree;
-		//this.hasFocus = hasFocus;
-		//setText(stringValue);
-		//jp.add(new JLabel(value.toString()));
-		//jp.setLayout(lm);
-		//jp.setSize(size[0], size[1]);
-		
-		/*for (JLabel lab: al) {
-			jp.add(lab);
-		}*/
 		return this;
 	}
 	
@@ -66,6 +33,7 @@ public class MyTreeCellRenderer extends JPanel implements TreeCellRenderer {
 		TagCompiler = tagCompiler;
 	}
 
-	public MyTreeCellRenderer() {}
+	public MyTreeCellRenderer() {
+	}
 
 }

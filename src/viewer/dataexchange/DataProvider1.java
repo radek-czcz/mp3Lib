@@ -6,13 +6,12 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
-import viewer.AbstractDataProvider;
+import viewer.DataProviderAbstract;
 
-public class DataProvider1 extends AbstractDataProvider {
+public class DataProvider1 extends DataProviderAbstract {
 	
-
 	@Override
-	protected void sendDataToModel(Object song) {
+	public void sendDataToModel(Object song) {
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode)window.getDataReceiver().getRoot();
 		node.add(new DefaultMutableTreeNode(song));
 	}

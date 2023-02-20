@@ -49,6 +49,8 @@ import entry.AppContext;
 import entry.FilesPaths;
 import entry.IButtonNameProvider;
 import entry.PathProvider;
+import viewer.ViewerAssembler;
+import viewer.tester;
 
 public class startCl {
 	
@@ -299,6 +301,13 @@ public class startCl {
 				new CompareToArchiveWindow(
 						locsSets.getSetUnit(RespModel.jl1.getSelectedValuesList().get(0).toString()));
 				else System.out.println("no selection made");
+			case "13":
+				System.out.println(RespModel.jl1.getSelectedValuesList().toString());
+				ViewerAssembler assembler = AppContext.getContext().getBean("ViewerAssemblerBean", ViewerAssembler.class);
+				locsSets sets = locsSets.getSetUnit(RespModel.jl1.getSelectedValuesList().get(0).toString());
+				assembler.getProvider().sendDataToModel(sets);
+				assembler.work();
+				break loop;
 			}
 		}
 	}
