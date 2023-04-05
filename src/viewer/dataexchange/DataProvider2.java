@@ -17,11 +17,12 @@ public class DataProvider2 extends DataProviderAbstract {
 	
 	@Override
 	public void sendDataToModel(Object song) {
-		DefaultMutableTreeNode node = (DefaultMutableTreeNode)window.getDataReceiver().getRoot();
 		
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode)window.getDataReceiver().getRoot();
 		locsSets set1 = (locsSets)song;
 		Iterator<Mp3Ident> iter = set1.getSongs().iterator();
 		while (iter.hasNext())
+			
 		node.add(new DefaultMutableTreeNode(iter.next().getTagArt()));
 	}
 
